@@ -5,12 +5,13 @@
 #define couleur_fond(coul)	printf("\033[%dm",coul+10)
 #define PALADIN "P"
 #define LICORNE "L"
-#define SPACE " "
+#define VOID " "
 
 char board [5][5];
 
 typedef PLAYER{
 	char name;
+	char color;
 	t_position paladin_1;
 	t_position paladin_2;
 	t_position paladin_3;
@@ -25,7 +26,7 @@ typedef POSITION{
 }t_position;
 //H
 void init(t_player player);
-int choice (t_player player);
+int choice (t_player* player_1,t_player* player_2);
 void board_view();
 
 //O
@@ -49,11 +50,13 @@ int main() {
 	printf("Joueur 2 Veuillez ecrir votre Pseudo:\n", );
 	scanf(" %c",&player_2.name );
 
-	choice();
+	choice(&player_1,&player_2);
 
-	init (P);
-	init (black_player);
-
+	if (player_1.color == "WHITE") {
+		init (player_2);
+	}else{
+		init (player_1);
+	}
 
 	//O
 	wait_escape();
@@ -67,13 +70,16 @@ void draw_board() {
 	// print_markers();
 }
 
-int choice (t_player player){
+//H
+int choice (t_player* player_1,t_player* player_2){
 	choice = srand (time (NULL));
 
 	if (choice % 2 = 0) {
-		choice = 1;
+		player_1->color="WHITE";
+		player_2->color="BLACK";
 	}else{
-		choice = 2;
+		player_2->color="WHITE";
+		player_1->color="BLACK";
 	}
 }
 
