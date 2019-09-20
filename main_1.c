@@ -160,12 +160,16 @@ void affiche_plateau(int ig){
 
 int main() {
 	COUL Joueur;
+	char restart;
 	int ig;
+	POINT clic1, clic2;
+	while (true) {
+		do {
+			printf("Change view [1/2]:\n");
+			scanf(" %d",&ig)
+		} while(ig < 0 && ig > 2);
+		clic1=wait_clic();
+		clic2=wait_clic();
 
-	do {
-		printf("Changement de vue [1/2]\n");
-		scanf(" %d",&ig)
-	} while(ig < 0 && ig > 2);
-
-
+	}
 }
