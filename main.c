@@ -11,7 +11,7 @@ int main() {
 	POINT clic1, clic2;
 
 	init_plateau();
-	init_piece2_debug();
+	init_piece1_debug();
 
 	init_graphics(900, 900);
 
