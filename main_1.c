@@ -149,17 +149,23 @@ void affiche_lisere (POINT bg, int nbLisere){
 void affiche_plateau(int ig);
 
 void affiche_plateau(int ig){
-
+	int i,j;
+	//suivant si ig vaut 1 ou 2 tu devras tourner le tableau
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			//le sang affiche toutes les cases
+		}
+	}
 }
 
 int main() {
 	COUL Joueur;
-	int view;
+	int ig;
 
 	do {
 		printf("Changement de vue [1/2]\n");
-		scanf(" %d",&view)
-	} while(view < 0 && view > 2);
+		scanf(" %d",&ig)
+	} while(ig < 0 && ig > 2);
 
 
 }
