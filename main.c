@@ -4,6 +4,35 @@
 #include "display/display.h"
 
 
+int main() {
+	// COUL Joueur;
+	// char restart;
+	int ig = 0;
+	POINT clic1, clic2;
+
+	init_plateau();
+	init_piece2_debug();
+
+	init_graphics(900, 900);
+
+	// splash_screen();
+
+	// ig = select_view();
+
+	while (true) {
+
+		affiche_auto_off();
+
+		affiche_plateau(ig);
+
+		affiche_all();
+
+		clic1=wait_clic();
+		clic2=wait_clic();
+	}
+}
+
+
 /*
 POINT numBox_to_pointBG_ig1 (NUMBOX numB);
 
@@ -29,28 +58,3 @@ NUMBOX point_ig2_to_numBox (POINT P){
 
 }
 */
-
-
-int main() {
-	COUL Joueur;
-	char restart;
-	int ig = 0;
-	POINT clic1, clic2;
-
-	init_graphics(900, 900);
-	splash_screen();
-
-	while (true) {
-
-		affiche_auto_off();
-
-		// ig = select_view();
-		clic1=wait_clic();
-
-		affiche_plateau(ig);
-		clic2=wait_clic();
-
-		affiche_all();
-
-	}
-}

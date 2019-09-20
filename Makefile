@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-O2 -Wall `sdl-config --cflags`
 LIBS=`sdl-config --libs` -lm -lSDL_ttf
 DIR=IN200
-FILES=display/display.c
+FILES=display/display.c utils/init.c
 HEADERS=display/display.h utils/init.h utils/types.h
 
 #Cible generique pour Linux

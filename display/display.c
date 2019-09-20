@@ -14,10 +14,10 @@ void splash_screen() {
 		fill_screen(turquoise);
 
 		for(int j = 0; j < 5; j++){
-			P.x = 100 + j*2;
+			P.x = WIDTH / 2 - 300 + j*2;
 			P.y = HEIGHT - i + j*10;
 			aff_pol("NOUS SOMMES SUR LE", 40, P, colors_pink[j]);
-			P.x = 200 + j*2;
+			P.x = WIDTH / 2 - 200 + j*2;
 			P.y = HEIGHT - i - 70 + j*10;
 			aff_pol("SERVICE PUBLIC", 40, P, colors_blue[j]);
 		}
@@ -47,12 +47,21 @@ void draw_board_grid(int ig){
 	aff_pol("SPLASH", 40, P, deeppink);
 
 	offset = WIDTH / 7;
-	for (i = 1; i < 7; i++) {
-		for (j = 1; j < 7; j++) {
-			P.x = offset * i;
-			P.y = offset * j;
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			P.x = offset * (i+1);
+			P.y = offset * (j+1);
 
-			draw_circle(P, offset/2, deeppink);
+			affiche_lisere(P, plateau[i][j].lisere);
+
+			switch (plateau[i][j].typeP) {
+				case LICORNE:
+					affiche_licorne(P, plateau[i][j].coulP);
+					break;;
+				case PALADIN:
+					affiche_paladin(P, plateau[i][j].coulP);
+					break;
+			}
 		}
 	}
 
@@ -71,7 +80,7 @@ void print_ruler(int ig){
 		P.x = offset/7;
 		P.y = offset * i;
 
-		aff_pol(rulerLetters[i-1], 40, P, deeppink);
+		aff_pol(rulerLetters[6-i], 40, P, deeppink);
 	}
 
 	for(i = 1; i < 7; i++) { // print digits
@@ -82,56 +91,33 @@ void print_ruler(int ig){
 	}
 }
 
-
 void affiche_lisere (POINT bg, int nbLisere){
-	int i,j;
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			switch (plateau[i][j].lisere) {
-				case 1:
-				//1 lesere
-				break;
-				case 2:
-				//2 nbLisere
-				break;
-				case 3:
-				//3 lisere
-				break;
-			}
-		}
+
+	int i;
+	int offset = WIDTH / 7;
+
+	for(i = 0; i < nbLisere; i++) {
+		draw_circle(bg, offset/2 - i*5, deeppink);
 	}
+
 }
 
 
 void affiche_licorne (POINT bg, COUL coulP){
-	int i,j;
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (plateau[i][j].typeP == LICORNE) {
-				//affiche le paladin
-				if (plateau[i][j].coulP == NOIR) {
-					//noir
-				}else if (plateau[i][j].coulP == BLANC){
-					//blanc
-				}
-			}
-		}
+	if (coulP == BLANC) {
+		draw_fill_circle(bg, 40, black);
+	} else {
+		draw_fill_circle(bg, 40, white);
 	}
+	draw_fill_circle(bg, 15, blueviolet);
 }
 
 
 void affiche_paladin (POINT bg, COUL coulP){
-	int i,j;
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (plateau[i][j].typeP == PALADIN) {
-				//affiche le paladin
-				if (plateau[i][j].coulP == NOIR) {
-					//noir
-				}else if (plateau[i][j].coulP == BLANC){
-					//blanc
-				}
-			}
-		}
+	if (coulP == BLANC) {
+		draw_fill_circle(bg, 40, black);
+	} else {
+		draw_fill_circle(bg, 40, white);
 	}
+	draw_fill_circle(bg, 15, deeppink);
 }
