@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "display.h"
 
+
 void splash_screen() {
 
 	POINT P;
@@ -71,31 +72,32 @@ void draw_board_grid(int ig){
 	aff_pol("SPLASH", 40, P, deeppink);
 
 	offset = WIDTH / 7;
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
+	for (j = 0; j < 6; j++) {;
+		for (i = 0; i < 6; i++) {
 
 			P.x = offset * (i+1);
 			P.y = offset * (j+1);
 
-			if (ig == 1) { // suivant ig
-				x=j;
-				y=i;
-			} else if (ig == 2) { // suivant ig
-				y=j;
-				x=5-i;
-			}
+			affiche_lisere(P, plateau[i][j].lisere);
 
-			affiche_lisere(P, plateau[x][y].lisere);
 
-			switch (plateau[x][y].typeP) {
-				case LICORNE:
-					affiche_licorne(P, plateau[x][y].coulP);
-					break;
-				case PALADIN:
-					affiche_paladin(P, plateau[x][y].coulP);
-					break;
-				default:
-					break;
+
+			if (plateau[i][j].typeP == LICORNE) {
+
+				if (ig == 1) { // suivant ig
+					P = numBox_to_pointBG_ig1(plateau[i][j]);
+				} else if (ig == 2) {
+					P = numBox_to_pointBG_ig2(plateau[i][j]);
+				}
+				affiche_licorne(P, plateau[i][j].coulP);
+
+			} else if (plateau[i][j].typeP == PALADIN) {
+					if (ig == 1) { // suivant ig
+						P = numBox_to_pointBG_ig1(plateau[i][j]);
+					} else if (ig == 2) {
+						P = numBox_to_pointBG_ig2(plateau[i][j]);
+					}
+					affiche_paladin(P, plateau[i][j].coulP);
 			}
 		}
 	}
@@ -155,4 +157,44 @@ void affiche_paladin (POINT bg, COUL coulP){
 		draw_fill_circle(bg, 40, black);
 	}
 	draw_fill_circle(bg, 15, deeppink);
+}
+
+
+
+POINT numBox_to_pointBG_ig1 (NUMBOX numB){
+	int offset = WIDTH / 7;
+	NUMBOX pointBG;
+	pointBG = offset + offset * numB.l;
+	pointBG = offset + offset * numB.c;
+	return pointBG;
+}
+
+POINT numBox_to_pointBG_ig2 (NUMBOX numB){
+	int offset = WIDTH / 7;
+	NUMBOX pointBG;
+
+	pointBG.c = offset + offset * numB.c;
+	pointBG.l = offset + offset * (5 - numB.l);
+
+	return pointBG;
+}
+
+
+NUMBOX point_ig1_to_numBox (POINT P){
+	NUMBOX numB;
+
+	numB.c = P.x / offset + 1;
+	numB.l = P.y / offset + 1;
+
+	return numB;
+}
+
+
+NUMBOX point_ig2_to_numBox (POINT P){
+	NUMBOX numB;
+
+	numB.c = P.x / offset + 1;
+	numB.l = P.y / offset + 1 + 5;
+
+	return numB;
 }
