@@ -7,15 +7,15 @@
 int main() {
 	// COUL Joueur;
 	// char restart;
-	int ig = 0;
+	int ig = 2;
 	POINT clic1, clic2;
 
 	init_plateau();
-	init_piece1_debug();
+	init_piece2_debug();
 
 	init_graphics(900, 900);
 
-	// splash_screen();
+	splash_screen();
 
 	// ig = select_view();
 

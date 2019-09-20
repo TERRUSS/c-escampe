@@ -9,7 +9,7 @@ void splash_screen();
 
 void affiche_plateau(int ig);
 void draw_board_grid(int ig);
-void print_ruler(int ig);
+void print_ruler();
 
 void affiche_lisere (POINT bg, int nbLisere);
 

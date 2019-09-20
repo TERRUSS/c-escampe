@@ -32,14 +32,14 @@ void splash_screen() {
 void affiche_plateau(int ig) { //TODO : variation
 
 	draw_board_grid(ig);
-	print_ruler(ig);
+	print_ruler();
 
 }
 
 void draw_board_grid(int ig){
 
 	POINT P;
-	int i, j, offset;
+	int i, j, offset, x, y;
 
 	fill_screen(aqua);
 	P.x = WIDTH / 2 - 80;
@@ -49,17 +49,26 @@ void draw_board_grid(int ig){
 	offset = WIDTH / 7;
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 6; j++) {
+
 			P.x = offset * (i+1);
-			P.y = offset * (j+1);
+			P.y = HEIGHT - offset * (j+1);
 
-			affiche_lisere(P, plateau[i][j].lisere);
+			if (ig == 1) { // suivant ig
+				x=j;
+				y=i;
+			} else if (ig == 2) { // suivant ig
+				y=j;
+				x=i;
+			}
 
-			switch (plateau[i][j].typeP) {
+			affiche_lisere(P, plateau[x][y].lisere);
+
+			switch (plateau[x][y].typeP) {
 				case LICORNE:
-					affiche_licorne(P, plateau[i][j].coulP);
-					break;;
+					affiche_licorne(P, plateau[x][y].coulP);
+					break;
 				case PALADIN:
-					affiche_paladin(P, plateau[i][j].coulP);
+					affiche_paladin(P, plateau[x][y].coulP);
 					break;
 			}
 		}
@@ -68,7 +77,7 @@ void draw_board_grid(int ig){
 }
 
 
-void print_ruler(int ig){
+void print_ruler(){
 	POINT P;
 	int i, offset;
 	char * rulerLetters[] = {"A", "B", "C", "D", "E", "F"};
@@ -105,9 +114,9 @@ void affiche_lisere (POINT bg, int nbLisere){
 
 void affiche_licorne (POINT bg, COUL coulP){
 	if (coulP == BLANC) {
-		draw_fill_circle(bg, 40, black);
-	} else {
 		draw_fill_circle(bg, 40, white);
+	} else {
+		draw_fill_circle(bg, 40, black);
 	}
 	draw_fill_circle(bg, 15, blueviolet);
 }
@@ -115,9 +124,9 @@ void affiche_licorne (POINT bg, COUL coulP){
 
 void affiche_paladin (POINT bg, COUL coulP){
 	if (coulP == BLANC) {
-		draw_fill_circle(bg, 40, black);
-	} else {
 		draw_fill_circle(bg, 40, white);
+	} else {
+		draw_fill_circle(bg, 40, black);
 	}
 	draw_fill_circle(bg, 15, deeppink);
 }
