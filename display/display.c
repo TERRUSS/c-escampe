@@ -29,6 +29,30 @@ void splash_screen() {
 
 }
 
+int select_view(){
+	POINT P;
+	POINT clic;
+
+	fill_screen(turquoise);
+
+	P.x = WIDTH / 2 - 300;
+	P.y = 600;
+	aff_pol("Selectionner le sens du plateau", 30, P, deeppink);
+
+	P.y = 400;
+
+	P.x = WIDTH / 4;
+	aff_pol("Normal", 40, P, deeppink);
+
+	P.x = WIDTH / 2 + 100;
+	aff_pol("Tilted", 40, P, deeppink);
+	clic=wait_clic();
+
+
+	return 2;
+}
+
+
 void affiche_plateau(int ig) { //TODO : variation
 
 	draw_board_grid(ig);
@@ -39,7 +63,7 @@ void affiche_plateau(int ig) { //TODO : variation
 void draw_board_grid(int ig){
 
 	POINT P;
-	int i, j, offset, x, y;
+	int i, j, offset, x=0, y=0;
 
 	fill_screen(aqua);
 	P.x = WIDTH / 2 - 80;
@@ -51,14 +75,14 @@ void draw_board_grid(int ig){
 		for (j = 0; j < 6; j++) {
 
 			P.x = offset * (i+1);
-			P.y = HEIGHT - offset * (j+1);
+			P.y = offset * (j+1);
 
 			if (ig == 1) { // suivant ig
 				x=j;
 				y=i;
 			} else if (ig == 2) { // suivant ig
 				y=j;
-				x=i;
+				x=5-i;
 			}
 
 			affiche_lisere(P, plateau[x][y].lisere);
@@ -69,6 +93,8 @@ void draw_board_grid(int ig){
 					break;
 				case PALADIN:
 					affiche_paladin(P, plateau[x][y].coulP);
+					break;
+				default:
 					break;
 			}
 		}

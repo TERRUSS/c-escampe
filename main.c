@@ -7,17 +7,16 @@
 int main() {
 	// COUL Joueur;
 	// char restart;
-	int ig = 2;
-	POINT clic1, clic2;
+	int ig;
 
 	init_plateau();
 	init_piece2_debug();
 
 	init_graphics(900, 900);
 
-	splash_screen();
+	// splash_screen();
 
-	// ig = select_view();
+	ig = select_view();
 
 	while (true) {
 
@@ -27,8 +26,7 @@ int main() {
 
 		affiche_all();
 
-		clic1=wait_clic();
-		clic2=wait_clic();
+		// clic2=wait_clic();
 	}
 }
 

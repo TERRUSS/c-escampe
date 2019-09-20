@@ -6,6 +6,7 @@
 
 
 void splash_screen();
+int select_view();
 
 void affiche_plateau(int ig);
 void draw_board_grid(int ig);
