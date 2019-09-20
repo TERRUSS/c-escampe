@@ -36,7 +36,7 @@
 #ifdef SDL_TTF_OK
 	#include <SDL_ttf.h>
 	#include <SDL/SDL_ttf.h>
-	#define POLICE_NAME "fonts/verdana.ttf"
+	#define POLICE_NAME "fonts/techno_hideo.ttf"
 	TTF_Font *police[256];
 	int verdana_ok = 0;
 #endif

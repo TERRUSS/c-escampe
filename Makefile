@@ -2,6 +2,8 @@ CC=gcc
 CFLAGS=-O2 -Wall `sdl-config --cflags`
 LIBS=`sdl-config --libs` -lm -lSDL_ttf
 DIR=IN200
+FILES=display/display.c
+HEADERS=display/display.h utils/init.h utils/types.h
 
 #Cible generique pour Linux
 %: graphics.o %.c
@@ -31,9 +33,9 @@ sans_ttf:
 	./exemple
 
 
-exemple: exemple.c graphics.o
-	$(CC) $(CFLAGS) graphics.o exemple.c -o exemple $(LIBS)
-	./exemple
+main: main.c graphics.o $(FILES) $(HEADERS)
+	$(CC) $(CFLAGS) graphics.o main.c $(FILES) -o main $(LIBS)
+	./main
 
 tar: clean
 	rm -rf $(DIR)
