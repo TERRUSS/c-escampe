@@ -10,4 +10,4 @@ POINT numBox_to_pointBG_ig2 (NUMBOX numB);
 NUMBOX point_ig1_to_numBox (POINT P);
 NUMBOX point_ig2_to_numBox (POINT P);
 
-void move (int ig);
+void move (int ig, int player);

@@ -13,7 +13,9 @@ void splash_screen() {
 
 	for (i = 0; i < HEIGHT + 100; i+=15) {
 
-		fill_screen(turquoise);
+		affiche_auto_off();
+
+		fill_screen(cyan);
 
 		for(int j = 0; j < 5; j++){
 			P.x = WIDTH / 2 - 300 + j*2;
@@ -24,18 +26,79 @@ void splash_screen() {
 			aff_pol("SERVICE PUBLIC", 40, P, colors_blue[j]);
 		}
 
+		affiche_all();
 		attendre(50);
+	}
+
+	affiche_auto_on();
+	fill_screen(black);
+}
+
+void select_player(int* player_1 , int* player_2){
+	int i;
+	int rand;
+
+	for (i = 0; i < WIDTH + 100; i+=15) {
+
+		affiche_auto_off();
+
+		fill_screen(cyan);
+
+		POINT P;
+
+		P.x = WIDTH / 2 - 200;
+		P.y = 600;
+		aff_pol("Selection en cours...", 30, P, deeppink);
+
+		P.x = 0 + i;
+		P.y = HEIGHT - 400;
+		aff_pol("éé load ... éé", 40, P, deeppink);
+
+		affiche_all();
+		attendre(20);
 	}
 
 	fill_screen(black);
 
+	affiche_auto_off();
+
+	fill_screen(cyan);
+
+	POINT P;
+
+	P.x = WIDTH / 2 - 200;
+	P.y = 600;
+
+	rand = myrand() % 2;
+
+	printf("%d\n",rand );
+	if (rand == 1) {
+		*player_1 = 0;
+		*player_2 = 1;
+		aff_pol("Player 1: Player Black", 30, P, deeppink);
+		P.y = 500;
+		aff_pol("player 2: Player White", 30, P, deeppink);
+	}else{
+		*player_1 = 1;
+		*player_2 = 0;
+
+		aff_pol("Player 1: Player White", 30, P, deeppink);
+		P.y = 500;
+		aff_pol("Player 2: Player Black", 30, P, deeppink);
+	}
+
+	affiche_all();
+	attendre(1000);
+
+	affiche_auto_on();
+	fill_screen(black);
 }
 
 int select_view(){
 	POINT P;
 	// POINT clic;
 
-	fill_screen(turquoise);
+	fill_screen(cyan);
 
 	P.x = WIDTH / 2 - 300;
 	P.y = 600;
@@ -160,6 +223,26 @@ void update_board(int ig){
 	}
 }
 
+void update_player(int player) {
+	POINT P, Q;
+	int i;
+	char * playerName[2][8] = {
+		{"P", "l", "a", "y", "e", "r", " ", "1"},
+		{"P", "l", "a", "y", "e", "r", " ", "2"}
+	};
+
+		//clean area
+	P.x = WIDTH - 45; P.y = HEIGHT;
+	Q.x = WIDTH; Q.y = 0;
+	draw_fill_rectangle(P, Q, cyan);
+
+	for (i = 0; i < 8; i++){
+		P.x = WIDTH - 45;
+		P.y = HEIGHT - 120 - i*40;
+		aff_pol(playerName[player][i], 40, P, deeppink);
+	}
+}
+
 void affiche_lisere (POINT bg, int nbLisere){
 
 	int i;
@@ -207,5 +290,4 @@ void hint_message(char * message) {
 	P.x = 10;
 	P.y = HEIGHT - 10;
 	aff_pol(message, 40, P, deeppink);
-
 }

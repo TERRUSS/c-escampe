@@ -1,13 +1,29 @@
 
 #include "movements.h"
 
-void move (int ig){
+void move (int ig, int player){
 	POINT P, pawn;
 	NUMBOX numB,numPawn;
+	int couleur;
 
 		//selction du pion
 	hint_message("Selectionne le pion");
-	pawn = wait_clic();
+	do {
+			pawn = wait_clic();
+
+			if (ig == 1) {
+				numPawn = point_ig1_to_numBox(pawn);
+			} else {
+				numPawn = point_ig2_to_numBox(pawn);
+			}
+
+			if (player == 0) {
+				couleur = NOIR;
+			}else{
+				couleur = BLANC;
+			}
+	} while(plateau[numPawn.c][numPawn.l].coulP == couleur);
+
 
 	if (ig == 1) {
 
@@ -33,7 +49,7 @@ void move (int ig){
 			hint_message("éééééé no way éééééé");
 			wait_clic();
 		}
-		
+
 	} else {
 
 		numPawn = point_ig2_to_numBox(pawn);
