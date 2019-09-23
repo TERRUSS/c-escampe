@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O2 -Wall `sdl-config --cflags`
+CFLAGS=-O2 -Wall `sdl-config --cflags` -std=c99
 LIBS=`sdl-config --libs` -lm -lSDL_ttf
 DIR=IN200
 FILES=display/display.c utils/init.c movements/movements.c

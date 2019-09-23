@@ -9,8 +9,9 @@ void splash_screen() {
 
 	int colors_pink[] = {deeppink, darkviolet, fuchsia, lightpink, mediumpurple};
 	int colors_blue[] = {blueviolet, aqua, aquamarine, azure, aliceblue};
+	int i;
 
-	for (int i = 0; i < HEIGHT + 100; i+=15) {
+	for (i = 0; i < HEIGHT + 100; i+=15) {
 
 		fill_screen(turquoise);
 
@@ -129,6 +130,8 @@ void update_board(int ig){
 	int i, j;
 	NUMBOX numB;
 	POINT P;
+
+	P.x = 0; P.y = 0; // On initialise pour éviter les erreures
 
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 6; j++) {

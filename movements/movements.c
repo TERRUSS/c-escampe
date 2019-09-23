@@ -17,19 +17,23 @@ void move (int ig){
 
 			hint_message("Selectionne le deplacement");
 
-			P = wait_clic();
+			do {
+				P = wait_clic();
+			} while (P.x < WIDTH/7 || P.x > WIDTH - WIDTH/7 || P.y < HEIGHT/7 || P.y > HEIGHT - HEIGHT/7);
+
 			numB = point_ig1_to_numBox(P);
 
 			plateau[numB.c][numB.l].typeP = plateau[numPawn.c][numPawn.l].typeP;
 			plateau[numB.c][numB.l].coulP = plateau[numPawn.c][numPawn.l].coulP;
 			plateau[numPawn.c][numPawn.l].typeP = VIDE;
 
-			affiche_vide( numBox_to_pointBG_ig1(numPawn) );
+			affiche_vide( numBox_to_pointBG_ig1(numPawn));
 		}else{
+
 			hint_message("éééééé no way éééééé");
 			wait_clic();
 		}
-
+		
 	} else {
 
 		numPawn = point_ig2_to_numBox(pawn);
@@ -38,15 +42,20 @@ void move (int ig){
 
 			hint_message("Selectionne le deplacement");
 
-			P = wait_clic();
+			do {
+				P = wait_clic();
+			} while (P.x < WIDTH/7 || P.x > WIDTH - WIDTH/7 || P.y < HEIGHT/7 || P.y > HEIGHT - HEIGHT/7);
+
 			numB = point_ig2_to_numBox(P);
 
 			plateau[numB.c][numB.l].typeP = plateau[numPawn.c][numPawn.l].typeP;
 			plateau[numB.c][numB.l].coulP = plateau[numPawn.c][numPawn.l].coulP;
 			plateau[numPawn.c][numPawn.l].typeP = VIDE;
 
-			affiche_vide( numBox_to_pointBG_ig2(numPawn) );
+			affiche_vide( numBox_to_pointBG_ig2(numPawn));
+
 		}else{
+
 			hint_message("éééééé no way éééééé");
 			wait_clic();
 		}
