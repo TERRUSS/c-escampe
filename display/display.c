@@ -32,7 +32,7 @@ void splash_screen() {
 
 int select_view(){
 	POINT P;
-	POINT clic;
+	// POINT clic;
 
 	fill_screen(turquoise);
 
@@ -47,10 +47,24 @@ int select_view(){
 
 	P.x = WIDTH / 2 + 100;
 	aff_pol("Tilted", 40, P, deeppink);
-	clic=wait_clic();
 
+	P.x = 10;
+	P.y = 20;
+	aff_pol("Made with love by Terruss and Cousteau", 20, P, mediumpurple);
+	while (true) {
+		P=wait_clic();
 
-	return 2;
+		if ( 350 < P.y && P.y < 500 ) {
+			if ( P.x < WIDTH/2) {
+				return 1;
+			} else {
+				return 2;
+			}
+		}
+	}
+
+	return 1;
+
 }
 
 
@@ -61,10 +75,12 @@ void affiche_plateau(int ig) { //TODO : variation
 
 }
 
-void draw_board_grid(int ig){
+void draw_board_grid(int ig) {
 
 	POINT P;
-	int i, j, offset, x=0, y=0;
+	int i=0, j=0, offset;
+	//Le y corespond au ligne
+	//Le x corespond aucologne
 
 	fill_screen(aqua);
 	P.x = WIDTH / 2 - 80;
@@ -75,33 +91,14 @@ void draw_board_grid(int ig){
 	for (j = 0; j < 6; j++) {;
 		for (i = 0; i < 6; i++) {
 
+				// on affiche la grille
+				//a faire au debut puis plus y toucher !!!
 			P.x = offset * (i+1);
 			P.y = offset * (j+1);
 
 			affiche_lisere(P, plateau[i][j].lisere);
-
-
-
-			if (plateau[i][j].typeP == LICORNE) {
-
-				if (ig == 1) { // suivant ig
-					P = numBox_to_pointBG_ig1(plateau[i][j]);
-				} else if (ig == 2) {
-					P = numBox_to_pointBG_ig2(plateau[i][j]);
-				}
-				affiche_licorne(P, plateau[i][j].coulP);
-
-			} else if (plateau[i][j].typeP == PALADIN) {
-					if (ig == 1) { // suivant ig
-						P = numBox_to_pointBG_ig1(plateau[i][j]);
-					} else if (ig == 2) {
-						P = numBox_to_pointBG_ig2(plateau[i][j]);
-					}
-					affiche_paladin(P, plateau[i][j].coulP);
-			}
 		}
 	}
-
 }
 
 
@@ -125,6 +122,38 @@ void print_ruler(){
 		P.x = offset * i;
 
 		aff_pol(rulerDigits[i-1], 40, P, deeppink);
+	}
+}
+
+void update_board(int ig){
+	int i, j;
+	NUMBOX numB;
+	POINT P;
+
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			// on affiche les pions
+			numB.c = i;
+			numB.l = j;
+
+			if (plateau[i][j].typeP == LICORNE) {
+
+				if (ig == 1) { // suivant ig
+					P = numBox_to_pointBG_ig1(numB);
+				} else if (ig == 2) {
+					P = numBox_to_pointBG_ig2(numB);
+				}
+				affiche_licorne(P, plateau[i][j].coulP);
+
+			} else if (plateau[i][j].typeP == PALADIN) {
+				if (ig == 1) { // suivant ig
+					P = numBox_to_pointBG_ig1(numB);
+				} else if (ig == 2) {
+					P = numBox_to_pointBG_ig2(numB);
+				}
+				affiche_paladin(P, plateau[i][j].coulP);
+			}
+		}
 	}
 }
 
@@ -159,42 +188,21 @@ void affiche_paladin (POINT bg, COUL coulP){
 	draw_fill_circle(bg, 15, deeppink);
 }
 
-
-
-POINT numBox_to_pointBG_ig1 (NUMBOX numB){
-	int offset = WIDTH / 7;
-	NUMBOX pointBG;
-	pointBG = offset + offset * numB.l;
-	pointBG = offset + offset * numB.c;
-	return pointBG;
-}
-
-POINT numBox_to_pointBG_ig2 (NUMBOX numB){
-	int offset = WIDTH / 7;
-	NUMBOX pointBG;
-
-	pointBG.c = offset + offset * numB.c;
-	pointBG.l = offset + offset * (5 - numB.l);
-
-	return pointBG;
+void affiche_vide (POINT bg){
+	draw_fill_circle(bg, 40, cyan);
 }
 
 
-NUMBOX point_ig1_to_numBox (POINT P){
-	NUMBOX numB;
+void hint_message(char * message) {
+	POINT P, Q;
 
-	numB.c = P.x / offset + 1;
-	numB.l = P.y / offset + 1;
+		//clean area
+	P.x = 0; P.y = HEIGHT;
+	Q.x = WIDTH; Q.y = HEIGHT-50;
+	draw_fill_rectangle(P, Q, cyan);
 
-	return numB;
-}
+	P.x = 10;
+	P.y = HEIGHT - 10;
+	aff_pol(message, 40, P, deeppink);
 
-
-NUMBOX point_ig2_to_numBox (POINT P){
-	NUMBOX numB;
-
-	numB.c = P.x / offset + 1;
-	numB.l = P.y / offset + 1 + 5;
-
-	return numB;
 }

@@ -15,6 +15,7 @@ struct NUMBOX{
 	int l;
 	int c;
 };
+typedef struct NUMBOX NUMBOX;
 
 struct BOX{
 	int lisere;

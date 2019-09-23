@@ -11,15 +11,16 @@
 //
 // 1. TYPES, VARIABLES, CONSTANTES ... ligne  39
 // 2. AFFICHAGE ...................... ligne  76
-// 3. GESTION D'ÉVÉNEMENTS ........... ligne  99
+// 3. GESTION D'ï¿½Vï¿½NEMENTS ........... ligne  99
 // 4. DESSIN D'OBJETS ................ ligne 135
-// 5. ÉCRITURE DE TEXTE .............. ligne 180
+// 5. ï¿½CRITURE DE TEXTE .............. ligne 180
 // 6. LECTURE D'ENTIER ............... ligne 210
 // 7. GESTION DU TEMPS ............... ligne 219
-// 8. VALEUR ALÉATOIRES .............. ligne 241
+// 8. VALEUR ALï¿½ATOIRES .............. ligne 241
 // 9. DIVERS ......................... ligne 252
 // #############################################
 
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,15 +42,15 @@
 
 // 1.1 TYPES
 
-	// Définition du type POINT
+	// Dï¿½finition du type POINT
 	typedef struct point {int x,y;} POINT;
 
-	// Définition du type COULEUR
+	// Dï¿½finition du type COULEUR
 	typedef Uint32 COULEUR;
 
-	// Les booléens
+	// Les boolï¿½ens
 	typedef int BOOL;
-	
+
 // 1.2 VARIABLES
 	// Taille de l'affichage
 	int WIDTH;
@@ -57,13 +58,13 @@
 
 // 1.3 CONSTANTES
 
-	// Déplacement minimal lorsque l'on utilise les flèches.
+	// Dï¿½placement minimal lorsque l'on utilise les flï¿½ches.
 	#define MINDEP 1
 
 	// Constantes de couleur
 	#include "couleur.h"
 
-	// Constantes booléennes
+	// Constantes boolï¿½ennes
 	#define TRUE 1
 	#define True 1
 	#define true 1
@@ -76,21 +77,21 @@
 // 2. AFFICHAGE
 // ############
 
-	// 2.1 Initialisation de la fenêtre sur laquelle on dessine
+	// 2.1 Initialisation de la fenï¿½tre sur laquelle on dessine
 	void init_graphics(int W, int H);
 
 	// 2.2 Affichage automatique ou manuel
-	// Si l'affichage est automatique, chaque objet dessiné
-	// est automatiquement affiché.
+	// Si l'affichage est automatique, chaque objet dessinï¿½
+	// est automatiquement affichï¿½.
 	// Sinon, il faut explicitement appeler la fonction
 	// affiche_all() pour afficher les objets
-	// synchro() est identique à affiche_all()
+	// synchro() est identique ï¿½ affiche_all()
 	void affiche_auto_on();
 	void affiche_auto_off();
 	void affiche_all();
 	void synchro();
 
-	// 2.3 Création de couleur
+	// 2.3 Crï¿½ation de couleur
 	// r g et b dans l'intervalle 0 .. 255
 	COULEUR couleur_RGB(int r, int g, int b);
 
@@ -98,22 +99,22 @@ void souris_visible();
 void souris_invisible();
 
 // #######################
-// 3. GESTION D'ÉVÉNEMENTS
+// 3. GESTION D'ï¿½Vï¿½NEMENTS
 // #######################
 
-	// 3.1 Renvoie le ou les flèches appuyées
-	// sous forme d'un déplacement en 
-	// x négatif = nombre d'appuis sur la flèche gauche
-	// x positif = nombre d'appuis sur la flèche droite
-	// y négatif = nombre d'appuis sur la flèche bas
-	// y positif = nombre d'appuis sur la flèche haut
-	// Instruction non bloquante, si aucune flèche n'a été
-	// appuyée les champs x et y vaudront 0.
+	// 3.1 Renvoie le ou les flï¿½ches appuyï¿½es
+	// sous forme d'un dï¿½placement en
+	// x nï¿½gatif = nombre d'appuis sur la flï¿½che gauche
+	// x positif = nombre d'appuis sur la flï¿½che droite
+	// y nï¿½gatif = nombre d'appuis sur la flï¿½che bas
+	// y positif = nombre d'appuis sur la flï¿½che haut
+	// Instruction non bloquante, si aucune flï¿½che n'a ï¿½tï¿½
+	// appuyï¿½e les champs x et y vaudront 0.
 	POINT get_arrow();
 
-	// 3.2 Renvoie déplacement de souris
-	// Meme sémantique que get_arrow()
-	// Instruction non bloquante, si la souris n'a pas bougé,
+	// 3.2 Renvoie dï¿½placement de souris
+	// Meme sï¿½mantique que get_arrow()
+	// Instruction non bloquante, si la souris n'a pas bougï¿½,
 	// les champs x et y vaudront 0.
 	POINT get_mouse();
 
@@ -122,13 +123,13 @@ void souris_invisible();
 	void wait_escape();
 
 	// 3.4 Attend que l'utilisateur clique avec le bouton gauche
-	// Renvoie les coordonnées du point cliqué
+	// Renvoie les coordonnï¿½es du point cliquï¿½
 	// Instruction bloquante
 	POINT wait_clic();
 
-	// 3.5 Attend que l'on clique et renvoie dans button le bouton cliqué :
+	// 3.5 Attend que l'on clique et renvoie dans button le bouton cliquï¿½ :
 	// *button vaut soit 'G' (pour Gauche), soit 'M' (pour milieu),
-	// soit 'D' (pour Droit) en fonction du bouton cliqué
+	// soit 'D' (pour Droit) en fonction du bouton cliquï¿½
 	// Instruction bloquante
 	POINT wait_clic_GMD(char *button);
 
@@ -137,7 +138,7 @@ void souris_invisible();
 // 4. DESSIN D'OBJETS
 // ##################
 
-	// 4.1 Remplissage de tout l'écran
+	// 4.1 Remplissage de tout l'ï¿½cran
 	void fill_screen(COULEUR color);
 
 	// 4.2 Dessine un pixel
@@ -147,12 +148,12 @@ void souris_invisible();
 	void draw_line(POINT p1, POINT p2, COULEUR color);
 
 	// 4.4 Dessine un rectangle non rempli
-	// Les deux points sont deux points quelconques 
+	// Les deux points sont deux points quelconques
 	// non adjacents du rectangle
 	void draw_rectangle(POINT p1, POINT p2, COULEUR color);
 
 	// 4.5 Dessine un rectangle rempli
-	// Les deux point sont deux points quelconques 
+	// Les deux point sont deux points quelconques
 	// non adjacents du rectangle
 	void draw_fill_rectangle(POINT p1, POINT p2, COULEUR color);
 
@@ -179,28 +180,28 @@ void souris_invisible();
 
 
 // ####################
-// 5. ÉCRITURE DE TEXTE
+// 5. ï¿½CRITURE DE TEXTE
 // ####################
 
-// L'affichage se fait dans la fenêtre graphique si SDL_ttf est installé.
-// Sinon il se fait dans dans la fenêtre shell
+// L'affichage se fait dans la fenï¿½tre graphique si SDL_ttf est installï¿½.
+// Sinon il se fait dans dans la fenï¿½tre shell
 
 	// 5.1 Affiche du texte avec
-	// Le texte est passé dans l'argument "a_ecrire" 
-	// la police est celle définie par la constante POLICE_NAME 
+	// Le texte est passï¿½ dans l'argument "a_ecrire"
+	// la police est celle dï¿½finie par la constante POLICE_NAME
 	//           dans graphics.c
-	// la taille est passée en argument
-	// l'argument p de type POINT est le point en haut à gauche
-	// à partir duquel le texte s'affiche
-	// la COULEUR C passée en argument est la couleur d'affichage
+	// la taille est passï¿½e en argument
+	// l'argument p de type POINT est le point en haut ï¿½ gauche
+	// ï¿½ partir duquel le texte s'affiche
+	// la COULEUR C passï¿½e en argument est la couleur d'affichage
 	void aff_pol(char *a_ecrire, int taille, POINT p, COULEUR C);
 
 	// 5.2 Affiche un entier
-	// Meme sémantique que aff_pol()
+	// Meme sï¿½mantique que aff_pol()
 	void aff_int(int n, int taille, POINT p, COULEUR C);
 
-	// 5.3 Affiche dans la fenêtre graphique comme dans une fenêtre
-	// shell mais sans déroulement. Commence en haut et
+	// 5.3 Affiche dans la fenï¿½tre graphique comme dans une fenï¿½tre
+	// shell mais sans dï¿½roulement. Commence en haut et
 	// se termine en bas.
 	void write_text(char *a_ecrire);
 	void write_int(int n);
@@ -212,7 +213,7 @@ void souris_invisible();
 // 6. LECTURE D'ENTIER
 // ###################
 
-	// 6.1 Renvoie l'entier tapé au clavier.
+	// 6.1 Renvoie l'entier tapï¿½ au clavier.
 	// Cette fonction est bloquante
 	int lire_entier_clavier();
 
@@ -221,14 +222,14 @@ void souris_invisible();
 // 7. GESTION DU TEMPS
 // ###################
 
-	// 7.1 Chronomètre élémentaire
-	// Déclenchement du chrono
-	// Le remet à zéro s'il était déjà lancé
+	// 7.1 Chronomï¿½tre ï¿½lï¿½mentaire
+	// Dï¿½clenchement du chrono
+	// Le remet ï¿½ zï¿½ro s'il ï¿½tait dï¿½jï¿½ lancï¿½
 	void chrono_start();
-	// Renvoie la valeur du chrono et ne l'arrête pas
+	// Renvoie la valeur du chrono et ne l'arrï¿½te pas
 	float chrono_val();
-	
-	// 7.2 Attend le nombre de millisecondes passé en argument
+
+	// 7.2 Attend le nombre de millisecondes passï¿½ en argument
 	void attendre(int millisecondes);
 
 	// 7.3.1 Renvoie l'heure de l'heure courante
@@ -240,13 +241,13 @@ void souris_invisible();
 
 
 // ####################
-// 8. VALEUR ALÉATOIRES
+// 8. VALEUR ALï¿½ATOIRES
 // ####################
 
 	// 8.1 Renvoie un float dans l'intervalle [0;1[
 	float alea_float();
 	// 8.2 Renvoie un int dans l'intervalle [0..N[
-	// soit N valeurs différentes de 0 à N-1
+	// soit N valeurs diffï¿½rentes de 0 ï¿½ N-1
 	int alea_int(int N);
 
 

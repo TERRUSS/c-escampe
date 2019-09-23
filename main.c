@@ -10,49 +10,25 @@ int main() {
 	int ig;
 
 	init_plateau();
-	init_piece2_debug();
+	//pions independants de la vue
+	init_piece1_debug();
 
 	init_graphics(900, 900);
 
-	// splash_screen();
+	splash_screen();
 
 	ig = select_view();
+
+	affiche_auto_off();
+	affiche_plateau(ig);
 
 	while (true) {
 
 		affiche_auto_off();
-
-		affiche_plateau(ig);
-
+		update_board(ig);
 		affiche_all();
 
-		// clic2=wait_clic();
+		affiche_auto_on();
+		move(ig);
 	}
 }
-
-
-/*
-POINT numBox_to_pointBG_ig1 (NUMBOX numB);
-
-POINT numBox_to_pointBG_ig1 (NUMBOX numB){
-
-}
-
-POINT numBox_to_pointBG_ig2 (NUMBOX numB);
-
-POINT numBox_to_pointBG_ig2 (NUMBOX numB){
-
-}
-
-NUMBOX point_ig1_to_numBox (POINT P);
-
-NUMBOX point_ig1_to_numBox (POINT P){
-
-}
-
-NUMBOX point_ig2_to_numBox (POINT P);
-
-NUMBOX point_ig2_to_numBox (POINT P){
-
-}
-*/
