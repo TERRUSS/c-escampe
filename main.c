@@ -10,6 +10,9 @@ int main() {
 	int ig, player = true;
 	int player_1;
 	int player_2;
+	POINT pawn;
+	NUMBOX numPawn;
+
 
 	init_plateau();
 	//pions independants de la vue
@@ -21,7 +24,7 @@ int main() {
 
 	select_player(&player_1 , &player_2);
 
-	if (player_1 == 1) {
+	if (player_1 == 0) {
 		player = 1;
 	} else {
 		player = 0;
@@ -36,14 +39,47 @@ int main() {
 
 		affiche_auto_off();
 
-		update_board(ig);
-		update_player(player);
+		update_board(ig,&pawn);
+		update_player(player, ig);
 
 		affiche_all();
 
+
+
 		affiche_auto_on();
-		move(ig,player);
+
+		move(ig, player, &pawn, &numPawn);
 
 		player = !player;
 	}
 }
+
+/*
+	TODO LIST :
+		> clean display/display.c/affiche_pm()
+
+
+		chez nous le langage
+		C'est une coutume
+		Mon papa fait la variable
+		Ma maman fait le printf
+		Et l'curé le pointeur
+
+		Chez nous la méca
+		c'est une coutume
+		Mon papa fait la bielette
+		Ma maman fait l'engrenage
+		Et le curé la branle
+
+		Chez nous les sciences
+		c'est une coutume
+		mon papa fait la physique
+		ma maman fait le chimie
+		et le curé la mathe
+
+		Chez nous les voitures
+		c'est une coutume
+		Mon papa fait le cartere
+		Ma maman fait l'embrayge
+		Et l'curé la démonte
+*/
