@@ -433,17 +433,62 @@ void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 
 	if (verif_lisere == 1) {
 		playable = true;
-		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
-			numB.c = numPawn->c - i;
-			numB.l = numPawn->l - j;
-			playable_point(ig,numB,playable);
+
+		if ((i == 0) && (plateau[numPawn->c][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0)) {
+			if ((plateau[numPawn->c - j][numPawn->l].typeP == VIDE) && (plateau[numPawn->c - j][numPawn->l - j].typeP == VIDE)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+
+			if ((plateau[numPawn->c + j][numPawn->l].typeP == VIDE) && (plateau[numPawn->c + j][numPawn->l - j].typeP == VIDE)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+
 		}
-		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
-			numB.c = numPawn->c + i;
-			numB.l = numPawn->l + j;
-			playable_point(ig,numB,playable);
+		if (( j == 0) && (plateau[numPawn->c - i][numPawn->l].typeP == VIDE) && (numPawn->c - i >= 0)) {
+			if ((plateau[numPawn->c][numPawn->l - i].typeP == VIDE) && (plateau[numPawn->c - i][numPawn->l - i].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if ((plateau[numPawn->c][numPawn->l + i].typeP == VIDE) && (plateau[numPawn->c - i][numPawn->l + i].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+		}
+		if ((i == 0) && (plateau[numPawn->c][numPawn->l + j].typeP == VIDE) && (numPawn->l + j < 6)) {
+
+			if ((plateau[numPawn->c + j][numPawn->l].typeP == VIDE) && (plateau[numPawn->c + j][numPawn->l + j ].typeP == VIDE)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+
+			if ((plateau[numPawn->c - j][numPawn->l].typeP == VIDE) && (plateau[numPawn->c - j][numPawn->l + j].typeP == VIDE)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+		}
+		if (( j == 0) && (plateau[numPawn->c + i][numPawn->l].typeP == VIDE) && (numPawn->c + i < 6)) {
+
+			if ((plateau[numPawn->c][numPawn->l + i].typeP == VIDE) && (plateau[numPawn->c + i][numPawn->l + i].typeP == VIDE)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if ((plateau[numPawn->c][numPawn->l - i].typeP == VIDE) && (plateau[numPawn->c + i][numPawn->l - i].typeP == VIDE)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
 		}
 	}
+
 	if (verif_lisere == 2) {
 		playable = false;
 		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
