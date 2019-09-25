@@ -18,8 +18,8 @@ int main() {
 
 	init_graphics(900, 900);
 
+	// /*
 	splash_screen();
-
 	currentPlayer = select_player();
 
 	ig = select_view();
@@ -27,7 +27,6 @@ int main() {
 	affiche_auto_off();
 	affiche_plateau(ig);
 
-	printf("IG : %d\n", ig);
 
 	while (gagnant == false) {
 
@@ -45,8 +44,13 @@ int main() {
 		move(ig, currentPlayer, &pawn, &numPawn);
 		// gagnant = get_winner(currentPlayer);
 
+
 		currentPlayer = !currentPlayer;
 	}
+	// */
+	victory_screen(gagnant);
+
+	return 0;
 }
 
 /*

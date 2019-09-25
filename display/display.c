@@ -80,7 +80,6 @@ int screen_select_player(){
 
 	rand = myrand() % 2;
 
-	printf("%d\n",rand );
 	if (rand == 1) {
 		player = 1;
 		aff_pol("Player 1: Player Black", 30, P, deeppink);
@@ -334,8 +333,6 @@ void affiche_vide (POINT bg){
 void affiche_pm(NUMBOX* numPawn, int ig){
 	int i, j;
 	int nb_lisere = plateau[numPawn->c][numPawn->l].lisere;
-	printf("lisere :%d ig :%d\n",nb_lisere,ig);
-	printf(" c:%d l:%d \n",numPawn->c,numPawn->l);
 	affiche_auto_off();
 
 	for (i = 0; i <= nb_lisere; i++) {
@@ -382,12 +379,11 @@ void lisere_1(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 	NUMBOX numB;
 	int playable = true;
-	int verif_lisere_1 = 1;
 	int verif_lisere;
 
 	verif_lisere = i + j;
-
-	if (verif_lisere_1 == 1) {
+	printf("c: %d l: %d\n",numPawn->c,numPawn->l );
+	if (verif_lisere == 1) {
 		playable = false;
 		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
 			numB.c = numPawn->c - i;
@@ -400,27 +396,86 @@ void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 			playable_point(ig,numB,playable);
 		}
 	}
+
 	if (verif_lisere == nb_lisere){
 		playable = true;
-		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
-			numB.c = numPawn->c - i;
-			numB.l = numPawn->l - j;
-			playable_point(ig,numB,playable);
+		printf("check : [%d %d] %d\n", numPawn->c -1, numPawn->l, plateau[numPawn->c -1][numPawn->l].typeP );
+
+		if ((plateau[numPawn->c][numPawn->l - 1].typeP == VIDE) && (numPawn->l - j >= 0)){
+
+			if ((i==0) && (plateau[numPawn->c][numPawn->l - j].typeP == VIDE)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+			if((j!=0) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+			if((j!=0) && (plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
 		}
-		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
-			numB.c = numPawn->c + i;
-			numB.l = numPawn->l + j;
-			playable_point(ig,numB,playable);
+		if ((plateau[numPawn->c][numPawn->l + 1].typeP == VIDE) && (numPawn->l + j < 6)){
+
+			if ((i==0) && (plateau[numPawn->c][numPawn->l + j].typeP == VIDE)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+
+
+			if((j!=0) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+			if((j!=0) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
 		}
-		if ((plateau[numPawn->c + i ][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l - j >= 0)){
-			numB.c = numPawn->c + i;
-			numB.l = numPawn->l - j;
-			playable_point(ig,numB,playable);
+
+		////
+
+		if((plateau[numPawn->c - 1][numPawn->l].typeP == VIDE) && (numPawn->c - i >= 0)) {
+
+			if ((j==0) && (plateau[numPawn->c - i][numPawn->l].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if((i!= 0) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+			if((i!= 0) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
 		}
-		if ((plateau[numPawn->c - i ][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)){
-			numB.c = numPawn->c - i;
-			numB.l = numPawn->l + j;
-			playable_point(ig,numB,playable);
+		if((plateau[numPawn->c + 1][numPawn->l].typeP == VIDE) && (numPawn->c + i < 6)) {
+			if ((j==0) && (plateau[numPawn->c + i][numPawn->l].typeP == VIDE)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if((i!= 0) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+			if((i!= 0) && plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
 		}
 	}
 }
@@ -492,9 +547,9 @@ void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 	if (verif_lisere == 2) {
 		playable = false;
 		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
-			numB.c = numPawn->c - i;
-			numB.l = numPawn->l - j;
-			playable_point(ig,numB,playable);
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
 		}
 		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
 			numB.c = numPawn->c + i;
@@ -591,4 +646,51 @@ void draw_fill_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 	}
 	draw_fill_circle(P, radius, color);
 
+}
+
+
+void victory_screen(int gagnant){
+	POINT P;
+
+	int colors_pink[] = {deeppink, darkviolet, fuchsia, lightpink, mediumpurple};
+	int colors_blue[] = {blueviolet, aqua, aquamarine, azure, aliceblue};
+	int i;
+	int sens = true;
+	int vPos = 0, cPos = WIDTH;
+
+	// while(true){
+		// sens = !sens;
+
+		for (i = 0; i < WIDTH; i++) {
+
+			affiche_auto_off();
+
+			fill_screen(cyan);
+
+			for(int j = 0; j < 5; j++){
+				vPos += i;
+				P.x = vPos;
+				P.y = HEIGHT/2 + j*2;
+				aff_pol("VICTOIRE ROYALE", 70, P, colors_pink[j]);
+
+				cPos -= i;
+				P.x = cPos;
+				P.y = HEIGHT/2 + j*2;
+				aff_pol("VICTOIRE ROYALE", 70, P, colors_blue[j]);
+			}
+
+			P.x = WIDTH / 6;
+			P.y = HEIGHT/2 + 50;
+			aff_pol("NOIR A GAGNE", 80, P, deeppink);
+			P.y = HEIGHT/2 - 10;
+			aff_pol("ON A RIEN PU FAIRE", 30, P, fuchsia);
+
+
+			affiche_all();
+			attendre(100);
+		}
+	// }
+
+	affiche_auto_on();
+	fill_screen(black);
 }

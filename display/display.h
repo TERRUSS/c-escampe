@@ -37,3 +37,5 @@ void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere);
 void draw_circle_from_numb(NUMBOX numB, int radius, int color, int ig);
 void draw_fill_circle_from_numb(NUMBOX numB, int radius, int color, int ig);
 void hint_message(char * message);
+
+void victory_screen(int gagnant);

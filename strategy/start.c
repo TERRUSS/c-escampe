@@ -14,5 +14,5 @@ int get_winner(int player){
 		}
 	}
 
-	return 0;
+	return false;
 }
