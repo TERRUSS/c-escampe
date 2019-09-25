@@ -34,11 +34,11 @@ void splash_screen() {
 	fill_screen(black);
 }
 
-void select_player(int* player_1 , int* player_2){
+int select_player(){
 
 	loading_screen();
 
-	screen_select_player(player_1, player_2);
+	return screen_select_player();
 
 }
 
@@ -66,8 +66,8 @@ void loading_screen(){
 	fill_screen(black);
 }
 
-void screen_select_player(int* player_1,int* player_2){
-	int rand;
+int screen_select_player(){
+	int rand, player;
 
 	affiche_auto_off();
 
@@ -82,14 +82,12 @@ void screen_select_player(int* player_1,int* player_2){
 
 	printf("%d\n",rand );
 	if (rand == 1) {
-		*player_1 = 0;
-		*player_2 = 1;
+		player = 1;
 		aff_pol("Player 1: Player Black", 30, P, deeppink);
 		P.y = 500;
 		aff_pol("player 2: Player White", 30, P, deeppink);
 	}else{
-		*player_1 = 1;
-		*player_2 = 0;
+		player = 0;
 
 		aff_pol("Player 1: Player White", 30, P, deeppink);
 		P.y = 500;
@@ -101,6 +99,8 @@ void screen_select_player(int* player_1,int* player_2){
 
 	affiche_auto_on();
 	fill_screen(black);
+
+	return player;
 }
 
 int select_view(){
@@ -136,7 +136,7 @@ int select_view(){
 		}
 	}
 
-	return 1;
+	// return 1;
 
 }
 
@@ -165,9 +165,8 @@ void draw_board_grid(int ig) {
 		for (i = 0; i < 6; i++) {
 
 				// on affiche la grille
-				//a faire au debut puis plus y toucher !!!
-			P.x = offset * (i+1);
-			P.y = offset * (j+1);
+			P.x = offset * (j+1);
+			P.y = offset * (i+1);
 
 			affiche_lisere(P, plateau[i][j].lisere);
 		}
@@ -319,7 +318,7 @@ void affiche_vide (POINT bg){
 
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 6; j++) {
-			if (plateau[i][j].coulP == NONE || plateau[i][j].coulP == PLAYABLE ) {
+			if (plateau[i][j].coulP == NONE || plateau[i][j].coulP == PLAYABLE || plateau[i][j].coulP == UNPLAYABLE ) {
 				numB.c = i;
 				numB.l = j;
 				draw_fill_circle_from_numb(numB, 50, cyan, 1);
@@ -333,98 +332,180 @@ void affiche_vide (POINT bg){
 
 
 void affiche_pm(NUMBOX* numPawn, int ig){
-	int i, j,a ,b, tmp=0;
-	NUMBOX numB;
+	int i, j;
 	int nb_lisere = plateau[numPawn->c][numPawn->l].lisere;
-	int verif_lisere;
-
+	printf("lisere :%d ig :%d\n",nb_lisere,ig);
+	printf(" c:%d l:%d \n",numPawn->c,numPawn->l);
 	affiche_auto_off();
 
 	for (i = 0; i <= nb_lisere; i++) {
 		for (j = 0; j <= nb_lisere; j++) {
 
-			//seulement le nb de lisere
-			verif_lisere = i + j;
-			if ((verif_lisere == nb_lisere)){
-
-				//all directions
-				tmp=0;
-				if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
-					numB.c = numPawn->c - i;
-					numB.l = numPawn->l - j;
-
-					for (a = 0; a < nb_lisere; a++) {
-						for (b = 0; b < nb_lisere; b++) {
-							if ((plateau[numPawn->c - a ][numPawn->l - b].typeP == PALADIN) || (plateau[numPawn->c - a ][numPawn->l - b].typeP == LICORNE)) {
-								tmp++;
-							}
-						}
-					}
-					printf("%d\n",tmp );
-					if (tmp == 0) {
-						plateau[numPawn->c - i ][numPawn->l - j].coulP = PLAYABLE;
-						draw_fill_circle_from_numb(numB, 41, red, ig);
-					}
-				}
-				tmp=0;
-				if ((plateau[numPawn->c + i ][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l - j >= 0)){
-					numB.c = numPawn->c + i;
-					numB.l = numPawn->l - j;
-					for (a = 0; a < nb_lisere; a++) {
-						for (b = 0; b < nb_lisere; b++) {
-							if ((plateau[numPawn->c + a ][numPawn->l - b].typeP == PALADIN) || (plateau[numPawn->c + a ][numPawn->l - b].typeP == LICORNE))  {
-								tmp++;
-							}
-						}
-					}
-					printf("%d\n",tmp );
-					if (tmp == 0) {
-						plateau[numPawn->c + i ][numPawn->l - j].coulP=PLAYABLE;
-						draw_fill_circle_from_numb(numB, 41, red, ig);
-					}
-				}
-				tmp=0;
-				if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
-					numB.c = numPawn->c + i;
-					numB.l = numPawn->l + j;
-					for (a = 0; a < nb_lisere; a++) {
-						for (b = 0; b < nb_lisere; b++) {
-
-							if ((plateau[numPawn->c - a ][numPawn->l + b].typeP == PALADIN) || (plateau[numPawn->c - a ][numPawn->l + b].typeP == LICORNE)) {
-								tmp++;
-							}
-						}
-					}
-					printf("%d\n",tmp );
-					if (tmp == 0) {
-						plateau[numPawn->c + i ][numPawn->l + j].coulP=PLAYABLE;
-						draw_fill_circle_from_numb(numB, 41, red, ig);
-					}
-				}
-				tmp=0;
-				if ((plateau[numPawn->c - i ][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)){
-					numB.c = numPawn->c - i;
-					numB.l = numPawn->l + j;
-					for (a = 0; a < nb_lisere; a++) {
-						for (b = 0; b < nb_lisere; b++) {
-							if ((plateau[numPawn->c - a ][numPawn->l + b].typeP == PALADIN) || (plateau[numPawn->c - a ][numPawn->l + b].typeP == LICORNE)) {
-								tmp++;
-							}
-						}
-					}
-					printf("%d\n",tmp );
-					if (tmp == 0) {
-						plateau[numPawn->c - i ][numPawn->l + j].coulP=PLAYABLE;
-						draw_fill_circle_from_numb(numB, 41, red, ig);
-					}
-
-				}
-
+			switch (nb_lisere) {
+				case 1:
+				lisere_1(numPawn,ig,i,j,nb_lisere);
+				break;
+				case 2:
+				lisere_2(numPawn,ig,i,j,nb_lisere);
+				break;
+				case 3:
+				lisere_3(numPawn,ig,i,j,nb_lisere);
+				break;
 			}
 		}
 	}
-
 	affiche_all();
+}
+
+void lisere_1(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
+	NUMBOX numB;
+	int playable = true;
+	int verif_lisere;
+
+	verif_lisere = i + j;
+
+	if ((verif_lisere == nb_lisere)){
+		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+
+	}
+}
+
+void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
+	NUMBOX numB;
+	int playable = true;
+	int verif_lisere_1 = 1;
+	int verif_lisere;
+
+	verif_lisere = i + j;
+
+	if (verif_lisere_1 == 1) {
+		playable = false;
+		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+	}
+	if (verif_lisere == nb_lisere){
+		playable = true;
+		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c - i ][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+	}
+}
+
+void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
+	NUMBOX numB;
+	int playable = true;
+	int verif_lisere;
+	verif_lisere = i + j;
+
+	if (verif_lisere == 1) {
+		playable = true;
+		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+	}
+	if (verif_lisere == 2) {
+		playable = false;
+		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c - i ][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+	}
+	if (verif_lisere == nb_lisere){
+		playable = true;
+		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c + i ][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l - j >= 0)){
+			numB.c = numPawn->c + i;
+			numB.l = numPawn->l - j;
+			playable_point(ig,numB,playable);
+		}
+		if ((plateau[numPawn->c - i ][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)){
+			numB.c = numPawn->c - i;
+			numB.l = numPawn->l + j;
+			playable_point(ig,numB,playable);
+		}
+	}
+}
+
+
+void playable_point(int ig,NUMBOX numB,int playable){
+
+	if (playable == true) {
+		plateau[numB.c][numB.l].coulP = PLAYABLE;
+	} else if (playable == false){
+		plateau[numB.c][numB.l].coulP = UNPLAYABLE;
+	}
+
+	if (plateau[numB.c][numB.l].coulP == PLAYABLE) {
+		draw_fill_circle_from_numb(numB, 41, red, ig);
+	} else if (plateau[numB.c][numB.l].coulP == UNPLAYABLE){
+		draw_fill_circle_from_numb(numB, 41, yellow, ig);
+	}
 
 }
 
@@ -453,6 +534,7 @@ void draw_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 	draw_circle(P, radius, color);
 
 }
+
 void draw_fill_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 
 	POINT P;

@@ -12,7 +12,7 @@ void select_deplacement( int ig, POINT *pawn, NUMBOX *numPawn );
 
 int deplacement_is_valid(POINT P, int ig);
 
-void reset_plyable_map();
+void reset_playable_map();
 
 POINT numBox_to_pointBG_ig1 (NUMBOX numB);
 POINT numBox_to_pointBG_ig2 (NUMBOX numB);

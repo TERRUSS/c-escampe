@@ -10,7 +10,7 @@ void move (int ig, int player, POINT* pawn, NUMBOX* numPawn){
 
 	select_deplacement(ig, pawn, numPawn);
 
-	reset_plyable_map();
+	reset_playable_map();
 }
 
 
@@ -24,7 +24,6 @@ void select_pawn (int ig, POINT* pawn, NUMBOX* numPawn, int player){
 		} else {
 			*numPawn = point_ig2_to_numBox(*pawn);
 		}
-
 		if (player == 0) {
 			couleur = NOIR;
 		}else{
@@ -45,7 +44,7 @@ void select_deplacement( int ig, POINT *pawn, NUMBOX *numPawn ) {
 	} else {
 		*numPawn = point_ig2_to_numBox(*pawn);
 	}
-
+	printf(" c:%d l:%d \n",numPawn->c,numPawn->l);
 	if (plateau[numPawn->c][numPawn->l].typeP != VIDE  ) {
 
 		hint_message("Selectionne le deplacement");
@@ -95,12 +94,12 @@ int deplacement_is_valid(POINT P, int ig){
 	}
 }
 
-void reset_plyable_map(){
+void reset_playable_map(){
 	int i, j;
 
 	for (i = 0; i < 6; i++){
 		for (j = 0; j < 6; j++){
-			if (plateau[i][j].coulP == PLAYABLE){
+			if (plateau[i][j].coulP == PLAYABLE || plateau[i][j].coulP == UNPLAYABLE){
 				plateau[i][j].coulP = VIDE;
 			}
 		}
@@ -140,8 +139,8 @@ NUMBOX point_ig2_to_numBox (POINT P){
 	int offset = WIDTH / 7;
 	NUMBOX numB;
 
-	numB.l = (( P.y - (offset/2))/offset);
-	numB.c = 5-(( P.x - (offset/2))/offset);
+	numB.l = 5-(( P.x - (offset/2))/offset);
+	numB.c = (( P.y - (offset/2))/offset);
 
 	return numB;
 }

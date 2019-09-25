@@ -54,6 +54,6 @@ clean:
 	rm -f *core
 	rm -f *.o
 	rm -f lib/police.h
-	rm -f exemple
+	rm -f main
 	rm -f *.tar
 	rm -rf $(DIR)

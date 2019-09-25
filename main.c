@@ -7,40 +7,34 @@
 int main() {
 	// COUL Joueur;
 	// char restart;
-	int ig, player = true;
-	int player_1;
-	int player_2;
+	int ig, currentPlayer = true, gagnant = false;
 	POINT pawn;
 	NUMBOX numPawn;
 
 
 	init_plateau();
 	//pions independants de la vue
-	init_piece1_debug();
+	init_piece2_debug();
 
 	init_graphics(900, 900);
 
 	splash_screen();
 
-	select_player(&player_1 , &player_2);
-
-	if (player_1 == 0) {
-		player = 1;
-	} else {
-		player = 0;
-	}
+	currentPlayer = select_player();
 
 	ig = select_view();
 
 	affiche_auto_off();
 	affiche_plateau(ig);
 
-	while (true) {
+	printf("IG : %d\n", ig);
+
+	while (gagnant == false) {
 
 		affiche_auto_off();
 
 		update_board(ig,&pawn);
-		update_player(player, ig);
+		update_player(currentPlayer, ig);
 
 		affiche_all();
 
@@ -48,9 +42,10 @@ int main() {
 
 		affiche_auto_on();
 
-		move(ig, player, &pawn, &numPawn);
+		move(ig, currentPlayer, &pawn, &numPawn);
+		// gagnant = get_winner(currentPlayer);
 
-		player = !player;
+		currentPlayer = !currentPlayer;
 	}
 }
 
@@ -83,3 +78,17 @@ int main() {
 		Ma maman fait l'embrayge
 		Et l'curé la démonte
 */
+
+/*
+void compute_pm(NUMBOX numPawn, int ig){
+
+	int i, j;
+	int nb = plateau[numPawn->c][numPawn->l].lisere;
+
+	for (i = 0; i < nb; i++){
+		for (j = 0; j < nb; i++){
+
+		}
+	}
+}
+// */

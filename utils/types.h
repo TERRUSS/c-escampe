@@ -2,7 +2,7 @@
 #pragma once
 
 enum COUL{
-	NONE, BLANC,NOIR,PLAYABLE
+	NONE, BLANC,NOIR,PLAYABLE, UNPLAYABLE
 };
 typedef enum COUL COUL;
 
