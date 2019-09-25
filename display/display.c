@@ -569,26 +569,75 @@ void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 	}
 	if (verif_lisere == nb_lisere){
 		playable = true;
-		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
-			numB.c = numPawn->c - i;
-			numB.l = numPawn->l - j;
-			playable_point(ig,numB,playable);
+		////////////////
+
+
+		if ((plateau[numPawn->c][numPawn->l - 1].typeP == VIDE) && (numPawn->l - j >= 0)){
+			if((plateau[numPawn->c][numPawn->l - 2].typeP == VIDE) && (i==0)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+			if (plateau[numPawn->c - 1][numPawn->l - 1].typeP == VIDE) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+			if (plateau[numPawn->c + 1][numPawn->l - 1].typeP == VIDE) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
 		}
-		if ((plateau[numPawn->c + i ][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l + j < 6)){
-			numB.c = numPawn->c + i;
-			numB.l = numPawn->l + j;
-			playable_point(ig,numB,playable);
-		}
-		if ((plateau[numPawn->c + i ][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6) && (numPawn->l - j >= 0)){
-			numB.c = numPawn->c + i;
-			numB.l = numPawn->l - j;
-			playable_point(ig,numB,playable);
-		}
-		if ((plateau[numPawn->c - i ][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)){
-			numB.c = numPawn->c - i;
-			numB.l = numPawn->l + j;
-			playable_point(ig,numB,playable);
-		}
+		if ((plateau[numPawn->c][numPawn->l + 1].typeP == VIDE) && (numPawn->l + j < 6)){
+				if ((plateau[numPawn->c][numPawn->l + 2].typeP == VIDE) && (i==0)) {
+					numB.c = numPawn->c;
+					numB.l = numPawn->l + j;
+					playable_point(ig,numB,playable);
+				}
+				if (plateau[numPawn->c - 1][numPawn->l + 1].typeP == VIDE) {
+					numB.c = numPawn->c - i;
+					numB.l = numPawn->l + j;
+					playable_point(ig,numB,playable);
+				}
+				if (plateau[numPawn->c + 1][numPawn->l + 1].typeP == VIDE) {
+					numB.c = numPawn->c + i;
+					numB.l = numPawn->l + j;
+					playable_point(ig,numB,playable);
+				}
+			}
+			if ((plateau[numPawn->c + 1][numPawn->l].typeP == VIDE) && (numPawn->c + i < 6)) {
+				if ((plateau[numPawn->c + 2][numPawn->l].typeP == VIDE)  && (j==0)) {
+					numB.c = numPawn->c + i;
+					numB.l = numPawn->l;
+					playable_point(ig,numB,playable);
+				}
+				if (plateau[numPawn->c + 1][numPawn->l + 1].typeP == VIDE) {
+					numB.c = numPawn->c + i;
+					numB.l = numPawn->l + j;
+					playable_point(ig,numB,playable);
+				}
+				if (plateau[numPawn->c + 1][numPawn->l - 1].typeP == VIDE) {
+					numB.c = numPawn->c + i;
+					numB.l = numPawn->l - j;
+					playable_point(ig,numB,playable);
+				}
+			}
+			if ((plateau[numPawn->c - 2][numPawn->l].typeP == VIDE)  && (j==0)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if (plateau[numPawn->c - 1][numPawn->l - 1].typeP == VIDE) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+			if (plateau[numPawn->c - 1][numPawn->l + 1].typeP == VIDE) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
 	}
 }
 
@@ -655,25 +704,25 @@ void victory_screen(int gagnant){
 	int colors_pink[] = {deeppink, darkviolet, fuchsia, lightpink, mediumpurple};
 	int colors_blue[] = {blueviolet, aqua, aquamarine, azure, aliceblue};
 	int i;
-	int sens = true;
+	// int sens = true;
 	int vPos = 0, cPos = WIDTH;
 
 	// while(true){
 		// sens = !sens;
 
-		for (i = 0; i < WIDTH; i++) {
+		for (i = 0; i < WIDTH; i+=15) {
 
 			affiche_auto_off();
 
 			fill_screen(cyan);
 
 			for(int j = 0; j < 5; j++){
-				vPos += i;
+				vPos += 1;
 				P.x = vPos;
 				P.y = HEIGHT/2 + j*2;
 				aff_pol("VICTOIRE ROYALE", 70, P, colors_pink[j]);
 
-				cPos -= i;
+				cPos -= 1;
 				P.x = cPos;
 				P.y = HEIGHT/2 + j*2;
 				aff_pol("VICTOIRE ROYALE", 70, P, colors_blue[j]);
@@ -687,7 +736,7 @@ void victory_screen(int gagnant){
 
 
 			affiche_all();
-			attendre(100);
+			attendre(25);
 		}
 	// }
 
