@@ -7,6 +7,10 @@ void move (int ig, int player, POINT* pawn, NUMBOX* numPawn){
 	hint_message("Selectionne le pion");
 
 	select_pawn(ig, pawn, numPawn, player);
+	printf("c l-1: %d\n",plateau[numPawn->c][numPawn->l - 1].typeP );
+	printf("c l+1: %d\n",plateau[numPawn->c][numPawn->l + 1].typeP );
+	printf("c-1 l: %d\n",plateau[numPawn->c - 1][numPawn->l].typeP );
+	printf("c+1 l: %d\n",plateau[numPawn->c + 1][numPawn->l].typeP );
 
 	select_deplacement(ig, pawn, numPawn);
 
@@ -33,6 +37,7 @@ void select_pawn (int ig, POINT* pawn, NUMBOX* numPawn, int player){
 
 	affiche_pm(numPawn, ig);
 }
+
 
 
 void select_deplacement( int ig, POINT *pawn, NUMBOX *numPawn ) {
@@ -69,6 +74,15 @@ void select_deplacement( int ig, POINT *pawn, NUMBOX *numPawn ) {
 
 		hint_message("éééééé no way éééééé");
 		attendre(500);
+	}
+}
+
+void reinit_select_pawn(int ig, POINT* pawn, NUMBOX* numPawn, int player) {
+
+	if (P.x > WIDTH-WIDTH/7 && P.y > HEIGHT - HEIGHT/7) {
+		reset_playable_map();
+		affiche_vide();
+		select_pawn(ig, pawn, numPawn, player);
 	}
 }
 

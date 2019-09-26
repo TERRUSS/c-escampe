@@ -1,13 +1,14 @@
 
 #include "utils/types.h"
 #include "utils/init.h"
+#include "strategy/start.h"
 #include "display/display.h"
 
 
 int main() {
 	// COUL Joueur;
 	// char restart;
-	int ig, currentPlayer = true, gagnant = false;
+	int ig, currentPlayer = 1, gagnant = false;
 	POINT pawn;
 	NUMBOX numPawn;
 
@@ -20,7 +21,7 @@ int main() {
 
 	// /*
 	splash_screen();
-	currentPlayer = select_player();
+	select_player();
 
 	ig = select_view();
 
@@ -42,7 +43,7 @@ int main() {
 		affiche_auto_on();
 
 		move(ig, currentPlayer, &pawn, &numPawn);
-		// gagnant = get_winner(currentPlayer);
+		gagnant = get_winner(currentPlayer);
 
 
 		currentPlayer = !currentPlayer;

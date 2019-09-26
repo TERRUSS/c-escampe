@@ -309,7 +309,7 @@ void affiche_paladin (POINT bg, COUL coulP){
 	draw_fill_circle(bg, 15, deeppink);
 }
 
-void affiche_vide (POINT bg){
+void affiche_vide (){
 	int i, j;
 	NUMBOX numB;
 
@@ -382,7 +382,6 @@ void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 	int verif_lisere;
 
 	verif_lisere = i + j;
-	printf("c: %d l: %d\n",numPawn->c,numPawn->l );
 	if (verif_lisere == 1) {
 		playable = false;
 		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
@@ -402,46 +401,39 @@ void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 		printf("check : [%d %d] %d\n", numPawn->c -1, numPawn->l, plateau[numPawn->c -1][numPawn->l].typeP );
 
 		if ((plateau[numPawn->c][numPawn->l - 1].typeP == VIDE) && (numPawn->l - j >= 0)){
-
 			if ((i==0) && (plateau[numPawn->c][numPawn->l - j].typeP == VIDE)) {
 				numB.c = numPawn->c;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
 			}
-			if((j!=0) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE)) {
+			if((j!=0) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0)) {
 				numB.c = numPawn->c - i;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
 			}
-			if((j!=0) && (plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE)) {
+			if((j!=0) && (plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE) && (numPawn->c + i < 6)) {
 				numB.c = numPawn->c + i;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
 			}
 		}
 		if ((plateau[numPawn->c][numPawn->l + 1].typeP == VIDE) && (numPawn->l + j < 6)){
-
 			if ((i==0) && (plateau[numPawn->c][numPawn->l + j].typeP == VIDE)) {
 				numB.c = numPawn->c;
 				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
-
-
-			if((j!=0) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE)) {
+			if((j!=0) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE) && (numPawn->c + i < 6)) {
 				numB.c = numPawn->c + i;
 				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
-			if((j!=0) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE)) {
+			if((j!=0) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE) && (numPawn->l - j >= 0)) {
 				numB.c = numPawn->c - i;
 				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
 		}
-
-		////
-
 		if((plateau[numPawn->c - 1][numPawn->l].typeP == VIDE) && (numPawn->c - i >= 0)) {
 
 			if ((j==0) && (plateau[numPawn->c - i][numPawn->l].typeP == VIDE)) {
@@ -449,12 +441,12 @@ void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 				numB.l = numPawn->l;
 				playable_point(ig,numB,playable);
 			}
-			if((i!= 0) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE)) {
+			if((i!= 0) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE) && (numPawn->l + j < 6)) {
 				numB.c = numPawn->c - i;
 				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
-			if((i!= 0) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE)) {
+			if((i!= 0) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0)) {
 				numB.c = numPawn->c - i;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
@@ -466,12 +458,12 @@ void lisere_2(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 				numB.l = numPawn->l;
 				playable_point(ig,numB,playable);
 			}
-			if((i!= 0) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE)) {
+			if((i!= 0) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE) && (numPawn->l + j < 6)) {
 				numB.c = numPawn->c + i;
 				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
-			if((i!= 0) && plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE) {
+			if((i!= 0) && (plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0)) {
 				numB.c = numPawn->c + i;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
@@ -543,7 +535,6 @@ void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 			}
 		}
 	}
-
 	if (verif_lisere == 2) {
 		playable = false;
 		if ((plateau[numPawn->c - i ][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)){
@@ -569,75 +560,109 @@ void lisere_3(NUMBOX* numPawn, int ig, int i, int j, int nb_lisere){
 	}
 	if (verif_lisere == nb_lisere){
 		playable = true;
-		////////////////
-
-
-		if ((plateau[numPawn->c][numPawn->l - 1].typeP == VIDE) && (numPawn->l - j >= 0)){
-			if((plateau[numPawn->c][numPawn->l - 2].typeP == VIDE) && (i==0)) {
+		if ((plateau[numPawn->c][numPawn->l - 1].typeP == VIDE) && (numPawn->l - 1 >=0)){
+			if((plateau[numPawn->c][numPawn->l - 2].typeP == VIDE) && (i==0) && (plateau[numPawn->c][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0)) {
 				numB.c = numPawn->c;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
 			}
-			if (plateau[numPawn->c - 1][numPawn->l - 1].typeP == VIDE) {
+			if ((plateau[numPawn->c - 1][numPawn->l - 1].typeP == VIDE) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)) {
 				numB.c = numPawn->c - i;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
 			}
-			if (plateau[numPawn->c + 1][numPawn->l - 1].typeP == VIDE) {
+			if ((plateau[numPawn->c + 1][numPawn->l - 1].typeP == VIDE) && (plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0) && (numPawn->c + i < 6)) {
 				numB.c = numPawn->c + i;
 				numB.l = numPawn->l - j;
 				playable_point(ig,numB,playable);
 			}
 		}
-		if ((plateau[numPawn->c][numPawn->l + 1].typeP == VIDE) && (numPawn->l + j < 6)){
-				if ((plateau[numPawn->c][numPawn->l + 2].typeP == VIDE) && (i==0)) {
-					numB.c = numPawn->c;
-					numB.l = numPawn->l + j;
-					playable_point(ig,numB,playable);
-				}
-				if (plateau[numPawn->c - 1][numPawn->l + 1].typeP == VIDE) {
-					numB.c = numPawn->c - i;
-					numB.l = numPawn->l + j;
-					playable_point(ig,numB,playable);
-				}
-				if (plateau[numPawn->c + 1][numPawn->l + 1].typeP == VIDE) {
-					numB.c = numPawn->c + i;
-					numB.l = numPawn->l + j;
-					playable_point(ig,numB,playable);
-				}
-			}
-			if ((plateau[numPawn->c + 1][numPawn->l].typeP == VIDE) && (numPawn->c + i < 6)) {
-				if ((plateau[numPawn->c + 2][numPawn->l].typeP == VIDE)  && (j==0)) {
-					numB.c = numPawn->c + i;
-					numB.l = numPawn->l;
-					playable_point(ig,numB,playable);
-				}
-				if (plateau[numPawn->c + 1][numPawn->l + 1].typeP == VIDE) {
-					numB.c = numPawn->c + i;
-					numB.l = numPawn->l + j;
-					playable_point(ig,numB,playable);
-				}
-				if (plateau[numPawn->c + 1][numPawn->l - 1].typeP == VIDE) {
-					numB.c = numPawn->c + i;
-					numB.l = numPawn->l - j;
-					playable_point(ig,numB,playable);
-				}
-			}
-			if ((plateau[numPawn->c - 2][numPawn->l].typeP == VIDE)  && (j==0)) {
-				numB.c = numPawn->c - i;
-				numB.l = numPawn->l;
+		if ((plateau[numPawn->c][numPawn->l + 1].typeP == VIDE) && (numPawn->l + 1 < 6)){
+			if ((plateau[numPawn->c][numPawn->l + 2].typeP == VIDE) && (i==0) && (plateau[numPawn->c][numPawn->l + j].typeP == VIDE) && (numPawn->l + j < 6)) {
+				numB.c = numPawn->c;
+				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
-			if (plateau[numPawn->c - 1][numPawn->l - 1].typeP == VIDE) {
-				numB.c = numPawn->c - i;
-				numB.l = numPawn->l - j;
-				playable_point(ig,numB,playable);
-			}
-			if (plateau[numPawn->c - 1][numPawn->l + 1].typeP == VIDE) {
+			if ((j!=0) && (plateau[numPawn->c - 1][numPawn->l + 1].typeP == VIDE) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)) {
 				numB.c = numPawn->c - i;
 				numB.l = numPawn->l + j;
 				playable_point(ig,numB,playable);
 			}
+			if ((j!=0) && (plateau[numPawn->c + 1][numPawn->l + 1].typeP == VIDE) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE) && (numPawn->l + j < 6) && (numPawn->c + i < 6)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+		}
+		if ((plateau[numPawn->c + 1][numPawn->l].typeP == VIDE) && (numPawn->c + 1 < 6)) {
+			if ((plateau[numPawn->c + 2][numPawn->l].typeP == VIDE)  && (j==0) && (plateau[numPawn->c + i][numPawn->l].typeP == VIDE) && (numPawn->c + i < 6)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if ((i!=0) && (plateau[numPawn->c + 1][numPawn->l + 1].typeP == VIDE) && (plateau[numPawn->c + i][numPawn->l + j].typeP == VIDE) && (numPawn->l + j < 6) && (numPawn->c + i < 6)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+			if ((i!=0) && (plateau[numPawn->c + 1][numPawn->l - 1].typeP == VIDE) && (plateau[numPawn->c + i][numPawn->l - j].typeP == VIDE) && (numPawn->l - j >= 0) && (numPawn->c + i < 6)) {
+				numB.c = numPawn->c + i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+		}
+		if ((plateau[numPawn->c - 1][numPawn->l].typeP == VIDE) && (numPawn->c - 1 >= 0)) {
+			if ((plateau[numPawn->c - 2][numPawn->l].typeP == VIDE)  && (j==0) && (plateau[numPawn->c - i][numPawn->l].typeP == VIDE) && (numPawn->c - i >= 0)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l;
+				playable_point(ig,numB,playable);
+			}
+			if ((i!=0) && (plateau[numPawn->c - 1][numPawn->l - 1].typeP == VIDE) && (plateau[numPawn->c - i][numPawn->l - j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l - j >= 0)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l - j;
+				playable_point(ig,numB,playable);
+			}
+			if ((i!=0) && (plateau[numPawn->c - 1][numPawn->l + 1].typeP == VIDE) && (plateau[numPawn->c - i][numPawn->l + j].typeP == VIDE) && (numPawn->c - i >= 0) && (numPawn->l + j < 6)) {
+				numB.c = numPawn->c - i;
+				numB.l = numPawn->l + j;
+				playable_point(ig,numB,playable);
+			}
+		}
+	}
+}
+
+
+void playable(){
+	NUMBOX coord ;
+
+	init_status();
+
+	for (coord.c = 0; coord.c < 6; coord.c++) {
+		for (coord.l = 0; coord.l < 6; coord.l++) {
+			if (playable_ok(coord, ig, joueur)) {
+				plateau[coord.c][coord.l].status = ACCESSIBLE ;
+			}
+		}
+	}
+}
+
+int playable_ok (NUMBOX numB, int ig, COUL joueur) {
+	switch (ig) {
+		case 1:
+			return (numB.l < 2 && joueur == BLANC) || (numB.l > 3 && joueur == NOIR) ;
+		case 2:
+			return (numB.c < 2 && joueur == BLANC) || (numB.c > 3 && joueur == NOIR) ;
+		default:
+			return FALSE;
+	}
+}
+
+void init_status() {
+	int c,l;
+	for (c = 0; c < 6; c++) {
+		for (l = 0; l < 6; l++) {
+			plateau[c][l].coulP = UNPLAYABLE ;
+		}
 	}
 }
 
@@ -707,10 +732,10 @@ void victory_screen(int gagnant){
 	// int sens = true;
 	int vPos = 0, cPos = WIDTH;
 
-	// while(true){
 		// sens = !sens;
+		// while(true){
 
-		for (i = 0; i < WIDTH; i+=15) {
+		for (i = 0; i < WIDTH*2; i+=15) {
 
 			affiche_auto_off();
 
@@ -730,7 +755,11 @@ void victory_screen(int gagnant){
 
 			P.x = WIDTH / 6;
 			P.y = HEIGHT/2 + 50;
-			aff_pol("NOIR A GAGNE", 80, P, deeppink);
+			if (gagnant == 1) {
+				aff_pol("NOIR A GAGNE", 80, P, deeppink);
+			} else if (gagnant == 2){
+				aff_pol("BLANC A GAGNE", 80, P, deeppink);
+			}
 			P.y = HEIGHT/2 - 10;
 			aff_pol("ON A RIEN PU FAIRE", 30, P, fuchsia);
 

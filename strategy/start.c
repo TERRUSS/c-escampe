@@ -1,18 +1,24 @@
 
-#include "strat.h"
+#include <stdio.h>
+#include "../utils/types.h"
+#include "start.h"
+
 
 int get_winner(int player){
 
-	for (i = 0; i < 6; i++0) {
-		for (i = 0; i < 6; i++0) {
+	int i, j;
+
+	printf("player %d\n", player);
+
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
 			if (plateau[i][j].typeP == LICORNE) {
 				if (plateau[i][j].coulP == player + 1){
-					printf("Winner : player %d\n", player);
-					return player;
+					return 0;
 				}
 			}
 		}
 	}
 
-	return false;
+	return player + 1;
 }

@@ -25,7 +25,7 @@ void affiche_lisere (POINT bg, int nbLisere);
 
 void affiche_licorne (POINT bg, COUL coulP);
 void affiche_paladin (POINT bg, COUL coulP);
-void affiche_vide (POINT bg);
+void affiche_vide ();
 
 void affiche_pm(NUMBOX* numPawn, int ig);
 void playable_point(int ig,NUMBOX numB, int playable);
