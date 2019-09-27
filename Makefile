@@ -2,8 +2,8 @@ CC=gcc
 CFLAGS=-O2 -Wall `sdl-config --cflags` -std=c99
 LIBS=`sdl-config --libs` -lm -lSDL_ttf
 DIR=IN200
-FILES=display/display.c utils/init.c utils/utils.c movements/movements.c strategy/start.c
-HEADERS=display/display.h utils/init.h utils/utils.h utils/types.h movements/movements.h strategy/start.h
+FILES=utils/init.c utils/utils.c movements/movements.c strategy/start.c display/display.c display/draw.c display/jucy.c
+HEADERS=utils/init.h utils/utils.h utils/types.h movements/movements.h strategy/start.h display/display.h display/draw.h display/jucy.h
 
 #Cible generique pour Linux
 %: graphics.o %.c
@@ -35,7 +35,6 @@ sans_ttf:
 
 main: main.c graphics.o $(FILES) $(HEADERS)
 	$(CC) $(CFLAGS) graphics.o main.c $(FILES) -o main $(LIBS)
-	./main
 
 tar: clean
 	rm -rf $(DIR)

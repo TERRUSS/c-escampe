@@ -1,14 +1,14 @@
+
 #pragma once
 
 #include "../lib/graphics.h"
 #include "../utils/types.h"
-#include "../utils/utils.h"
-#include "../init/init.h"
-#include "../movements/movements.h"
-#include "../display/draw.h"
+#include "display.h"
 
 
 void draw_board_grid(int ig);
+
+void update_player(int player, int ig);
 
 void print_ruler();
 

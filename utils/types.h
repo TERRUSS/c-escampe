@@ -2,9 +2,14 @@
 #pragma once
 
 enum COUL{
-	NONE, BLANC,NOIR, PLAYABLE, UNPLAYABLE
+	NONE, BLANC,NOIR
 };
 typedef enum COUL COUL;
+
+enum PLAY{
+	PLAYABLE, UNPLAYABLE
+};
+typedef enum PLAY PLAY;
 
 enum TYPE{
 	VIDE,LICORNE,PALADIN
@@ -21,6 +26,8 @@ struct BOX{
 	int lisere;
 	TYPE typeP;
 	COUL coulP;
+	PLAY playP;
+	int tmp_play;
 };
 typedef struct BOX BOX;
 BOX plateau [6][6];

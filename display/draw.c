@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "draw.c.h"
+#include "draw.h"
 
 void draw_board_grid(int ig) {
 
@@ -14,7 +14,7 @@ void draw_board_grid(int ig) {
 	aff_pol("SPLASH", 40, P, deeppink);
 
 	offset = WIDTH / 7;
-	for (j = 0; j < 6; j++) {;
+	for (j = 0; j < 6; j++) {
 		for (i = 0; i < 6; i++) {
 
 				// on affiche la grille
@@ -47,4 +47,92 @@ void print_ruler(){
 
 		aff_pol(rulerDigits[i-1], 40, P, deeppink);
 	}
+}
+
+void hint_message(char * message) {
+	POINT P, Q;
+
+		//clean area
+	P.x = 0; P.y = HEIGHT;
+	Q.x = WIDTH; Q.y = HEIGHT-50;
+	draw_fill_rectangle(P, Q, cyan);
+
+	P.x = 10;
+	P.y = HEIGHT - 10;
+	aff_pol(message, 40, P, deeppink);
+
+	affiche_all();
+}
+
+void draw_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
+
+	POINT P;
+
+	if (ig == 1) {
+		P = numBox_to_pointBG_ig1(numB);
+	} else if (ig == 2) {
+		P = numBox_to_pointBG_ig2(numB);
+	}
+	draw_circle(P, radius, color);
+}
+
+void draw_fill_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
+
+	POINT P;
+
+	if (ig == 1) {
+		P = numBox_to_pointBG_ig1(numB);
+	} else if (ig == 2) {
+		P = numBox_to_pointBG_ig2(numB);
+	}
+	draw_fill_circle(P, radius, color);
+}
+
+
+void update_player(int player, int ig) {
+	POINT P, Q;
+	int i, j;
+	char * playerName[2][12] = {
+		{"J", "o", "u", "e", "u", "r", " ", "B", "l", "a", "n", "c"},
+		{"J", "o", "u", "e", "u", "r", " ", "N", "o", "i", "r"," "}
+	};
+
+		//clean area and print player
+	P.x = WIDTH - 45; P.y = HEIGHT;
+	Q.x = WIDTH; Q.y = 0;
+
+	affiche_auto_off();
+
+	draw_fill_rectangle(P, Q, cyan);
+
+	for (i = 0; i < 12; i++){
+		P.x = WIDTH - 45;
+		P.y = HEIGHT - 120 - i*40;
+		aff_pol(playerName[player][i], 40, P, deeppink);
+
+	}
+
+		//highlight player's pawns
+	NUMBOX numB;
+
+	P.x = 0; P.y = 0; // On initialise pour éviter les erreures
+
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			numB.c = i;
+			numB.l = j;
+
+				//on clean le highlight du tour précédent
+			P = numBox_to_pointBG_ig1(numB);
+			draw_circle(P, 40, cyan);
+			draw_circle(P, 41, cyan);
+
+				//On hilight les pions jouables / Joueur
+			if (plateau[i][j].coulP == player+1) { //ie. coulP != {NONE, PLAYABLE}
+				draw_circle_from_numb(numB, 41, yellow, ig);
+			}
+		}
+	}
+
+	affiche_all();
 }

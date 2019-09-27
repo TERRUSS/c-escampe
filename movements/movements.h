@@ -6,11 +6,11 @@
 #include "../display/display.h"
 
 
-void move (int ig, int player, POINT* pawn, NUMBOX* numPawn);
-void select_pawn (int ig, POINT* pawn, NUMBOX* numPawn, int player);
-void select_deplacement( int ig, POINT *pawn, NUMBOX *numPawn );
+int move (int ig, int player);
+NUMBOX select_pawn (int ig, int player);
+int select_deplacement( int ig, NUMBOX numPawn, int player );
 
-int deplacement_is_valid(POINT P, int ig);
+int deplacement_is_valid(POINT P, int ig, int player);
 
 void reset_playable_map();
 
