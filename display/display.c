@@ -112,9 +112,7 @@ void calcule_pm(NUMBOX numB){
 		for (x = 0; x < 6; x++) {
 			for (y = 0; y < 6; y++) {
 				if (plateau[x][y].tmp_play == i-1 ){
-					if (plateau[x][y].tmp_play != 2 || is_surrounded_by_1(x, y)){ // FUCK
 						expand(x, y, i);
-					}
 					printf("CHECKING [%d %d]\n", x, y);
 				}
 			}
@@ -126,49 +124,71 @@ void calcule_pm(NUMBOX numB){
 void expand(int x, int y, int i) {
 	if (x+1 < 6) {
 		if (plateau[x+1][y].typeP == VIDE) {
-			plateau[x+1][y].tmp_play = i;
+			if(plateau[x][y].tmp_play == 2 && plateau[x+1][y].tmp_play == 1){
+				if ( is_surrounded_by_1(x+1, y)){
+					plateau[x+1][y].tmp_play = i;
+				}
+			} else {
+				plateau[x+1][y].tmp_play = i;
+			}
 		}
 	}
 
 	if (x-1 >= 0) {
 		if (plateau[x-1][y].typeP == VIDE) {
-			plateau[x-1][y].tmp_play = i;
+			if(plateau[x][y].tmp_play == 2 && plateau[x-1][y].tmp_play == 1){
+				if ( is_surrounded_by_1(x-1, y)){
+					plateau[x-1][y].tmp_play = i;
+				}
+			} else {
+				plateau[x-1][y].tmp_play = i;
+			}
 		}
 	}
 
 	if (y+1 < 6) {
 		if (plateau[x][y+1].typeP == VIDE) {
-			plateau[x][y+1].tmp_play = i;
+			if(plateau[x][y].tmp_play == 2 && plateau[x][y+1].tmp_play == 1){
+				if ( is_surrounded_by_1(x, y+1)){
+					plateau[x][y+1].tmp_play = i;
+				}
+			} else {
+				plateau[x][y+1].tmp_play = i;
+			}
 		}
 	}
 
 			if (y-1 >= 0) {
 		if (plateau[x][y-1].typeP == VIDE) {
-			plateau[x][y-1].tmp_play = i;
+			if(plateau[x][y].tmp_play == 2 && plateau[x][y-1].tmp_play == 1){
+				if ( is_surrounded_by_1(x, y-1)){
+					plateau[x][y-1].tmp_play = i;
+				}
+			} else {
+				plateau[x][y-1].tmp_play = i;
+			}
 		}
 	}
 
 }
 
 int is_surrounded_by_1(int x, int y) {
-	int cmpt = 0;
 
-	if (plateau[x+1][y].tmp_play == 1){
-		cmpt++;
+	if (plateau[x+1][y+1].tmp_play == 1){
+		return 1;
 	}
-	if (plateau[x-1][y].tmp_play == 1){
-		cmpt++;
+	if (plateau[x+1][y-1].tmp_play == 1){
+		return 1;
 	}
-	if (plateau[x][y+1].tmp_play == 1){
-		cmpt++;
+	if (plateau[x-1][y+1].tmp_play == 1){
+		return 1;
 	}
-	if (plateau[x][y-1].tmp_play == 1){
-		cmpt++;
+	if (plateau[x-1][y-1].tmp_play == 1){
+		return 1;
 	}
 
-	printf("surorunded by%d\n", cmpt);
-
-	return cmpt -1; //true si > 2
+printf("surrounding check : [%d %d] is alone", x, y);
+	return 0;
 }
 
 void affiche_pm(int ig){
