@@ -30,7 +30,6 @@ void init_play(){
 	}
 }
 
-
 void init_piece1_debug(){
 	plateau[0][2].typeP=PALADIN;plateau[0][2].coulP=NOIR;
 	plateau[0][4].typeP=PALADIN;plateau[0][4].coulP=NOIR;
@@ -62,27 +61,100 @@ void init_piece2_debug(){
 }
 
 void select_pawn_position(int ig){
-	NUMBOX licorn;
+	NUMBOX licorn,paladin;
+	int x;
 	// NUMBOX Paladin;
 	int i;
+	hint_message("Joueur NOIR : Place ta LICORNE");
+	do {
+		licorn = select_cell(ig);
+		if (ig==1) {
+			x=licorn.c;
+		}else{
+			x=licorn.l;
+		}
+	} while((x < 0 || x > 1) && (x < 4 || x > 5));
 
-	hint_message("Joueur NOIR : Selectionne l'emplacement de la licorne");
-	licorn = select_pawn(ig, 0);
 	plateau[licorn.c][licorn.l].typeP = LICORNE;
+	plateau[licorn.c][licorn.l].coulP = NOIR;
+	update_board(ig);
 
 	for (i = 0; i < 5; i++) {
-		hint_message("Joueur NOIR : Selectionne l'emplacement du paladin");
-		licorn = select_pawn(ig, 0);
-		plateau[licorn.c][licorn.l].typeP = PALADIN;
+		hint_message("Joueur NOIR : Place tes PALADINS");
+		if ((x >= 0 && x <= 1)) {
+			do {
+				paladin = select_cell(ig);
+				if (ig==1) {
+					x=paladin.c;
+				}else{
+					x=paladin.l;
+				}
+			} while((x < 0 || x > 1) || (plateau[paladin.c][paladin.l].typeP == LICORNE) || (plateau[paladin.c][paladin.l].typeP == PALADIN));
+		}else if (x >= 4 && x <= 5){
+			do {
+				paladin = select_cell(ig);
+				if (ig==1) {
+					x=paladin.c;
+				}else{
+					x=paladin.l;
+				}
+			} while((x < 4 || x > 5) || (plateau[paladin.c][paladin.l].typeP == LICORNE) || (plateau[paladin.c][paladin.l].typeP == PALADIN));
+		}
+		plateau[paladin.c][paladin.l].typeP = PALADIN;
+		plateau[paladin.c][paladin.l].coulP = NOIR;
+		update_board(ig);
+
 	}
 
-	hint_message("Joueur BLANC : Selectionne l'emplacement de la licorne");
-	licorn = select_pawn(ig, 1);
+	hint_message("Joueur BLANC : Place ta licorne");
+	if (x >= 0 && x <= 1) {
+		do {
+			licorn = select_cell(ig);
+			if (ig==1) {
+				x=licorn.c;
+			}else{
+				x=licorn.l;
+			}
+		} while(x < 4 || x > 5);
+	}else if (x >= 4 && x <= 5){
+		do {
+			licorn = select_cell(ig);
+			if (ig==1) {
+				x=licorn.c;
+			}else{
+				x=licorn.l;
+			}
+		} while(x < 0 || x > 1);
+	}
+
 	plateau[licorn.c][licorn.l].typeP = LICORNE;
+	plateau[licorn.c][licorn.l].coulP = BLANC;
+	update_board(ig);
+
 
 	for (i = 0; i < 5; i++) {
-		hint_message("Joueur BLANC : Selectionne l'emplacement du paladin");
-		licorn = select_pawn(ig, 0);
-		plateau[licorn.c][licorn.l].typeP = PALADIN;
+		hint_message("Joueur BLANC : Place tes PALADINS");
+		if ((x >= 0 && x <= 1)) {
+			do {
+				paladin = select_cell(ig);
+				if (ig==1) {
+					x=paladin.c;
+				}else{
+					x=paladin.l;
+				}
+			} while((x < 0 || x > 1) || (plateau[paladin.c][paladin.l].typeP == LICORNE) || (plateau[paladin.c][paladin.l].typeP == PALADIN));
+		}else if (x >= 4 && x <= 5) {
+			do {
+				paladin = select_cell(ig);
+				if (ig==1) {
+					x=paladin.c;
+				}else{
+					x=paladin.l;
+				}
+			} while((x < 4 || x > 5) || (plateau[paladin.c][paladin.l].typeP == LICORNE) || (plateau[paladin.c][paladin.l].typeP == PALADIN));
+		}
+		plateau[paladin.c][paladin.l].typeP = PALADIN;
+		plateau[paladin.c][paladin.l].coulP = BLANC;
+		update_board(ig);
 	}
 }

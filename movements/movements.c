@@ -1,39 +1,41 @@
 
 #include "movements.h"
 
-int move (int ig, int player){
+int move (int ig, int player, int * turn_pm){
 
  NUMBOX numPawn;
- int replay = false;
+ int replay = false,playablePawns=0,i,j;
 
 		//selction du pion
-	numPawn = select_pawn(ig, player);
+  for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			if (plateau[i][j].lisere == *turn_pm){
+      	if (plateau[i][j].coulP == player+1){
+          playablePawns++;
+        }
+      }
+    }
+  }
+  if(playablePawns>0){
+  	numPawn = select_pawn(ig, player, *turn_pm);
 
-	replay = select_deplacement(ig, numPawn, player);
+  	replay = select_deplacement(ig, numPawn, player, turn_pm);
 
-	reset_playable_map();
-
+  	reset_playable_map();
+  }
   return replay;
 }
 
 
-NUMBOX select_pawn (int ig, int player){
+NUMBOX select_pawn (int ig, int player, int turn_pm){
 	int couleur, ok;
-	POINT P;
 	NUMBOX numPawn;
 
 
 	do {
 		hint_message("Selectionne le pion");
 
-		P = wait_clic();
-
-		if (ig == 1) {
-			numPawn = point_ig1_to_numBox(P);
-		} else {
-			numPawn = point_ig2_to_numBox(P);
-		}
-
+		numPawn = select_cell(ig);
 		if (player == 1) {
 			couleur = NOIR;
 		}else{
@@ -44,8 +46,10 @@ NUMBOX select_pawn (int ig, int player){
 
 		if (plateau[numPawn.c][numPawn.l].typeP != VIDE) {
 			if (plateau[numPawn.c][numPawn.l].coulP == couleur){
-				ok = true;
-				break;
+				if (plateau[numPawn.c][numPawn.l].lisere == turn_pm){
+					ok = true;
+					break;
+				}
 			}
 		} else {
 			hint_message("éééééé no way éééééé");
@@ -53,13 +57,13 @@ NUMBOX select_pawn (int ig, int player){
 		}
 	} while(!ok);
 
-	calcule_pm(numPawn);
+	calcule_pm(numPawn, player);
 	affiche_pm(ig);
 
 	return numPawn;
 }
 
-int select_deplacement( int ig, NUMBOX numPawn, int player ) {
+int select_deplacement( int ig, NUMBOX numPawn, int player, int * turn_pm ) {
 	POINT P;
 	NUMBOX numB;
 
@@ -80,15 +84,15 @@ int select_deplacement( int ig, NUMBOX numPawn, int player ) {
 	} else {
 		numB = point_ig2_to_numBox(P);
 	}
-	printf("1 :: l: %d c: %d %d %d\n",numB.c ,numB.l,plateau[numB.c][numB.l].typeP == VIDE,plateau[numB.c][numB.l].playP);
-
 	plateau[numB.c][numB.l].typeP = plateau[numPawn.c][numPawn.l].typeP;
 	plateau[numB.c][numB.l].coulP = plateau[numPawn.c][numPawn.l].coulP;
 	plateau[numPawn.c][numPawn.l].typeP = VIDE;
 	plateau[numPawn.c][numPawn.l].coulP = NONE;
-	printf("2 :: l: %d c: %d %d %d\n",numPawn.c ,numPawn.l,plateau[numPawn.c][numPawn.l].typeP == VIDE,plateau[numPawn.c][numPawn.l].playP);
 
 	affiche_vide( numBox_to_pointBG_ig1(numPawn));
+
+	*turn_pm = plateau[numB.c][numB.l].lisere;
+
   return false;
 }
 	// }else{
@@ -119,6 +123,18 @@ int deplacement_is_valid(POINT P, int ig, int player){
 	}
 	return 0;
 }
+
+NUMBOX select_cell(int ig){
+	POINT P;
+
+	P = wait_clic();
+	if (ig == 1) {
+		return point_ig1_to_numBox(P);
+	} else {
+		return point_ig2_to_numBox(P);
+	}
+}
+
 
 void reset_playable_map(){
 	int i, j;
@@ -165,8 +181,8 @@ NUMBOX point_ig2_to_numBox (POINT P){
 	int offset = WIDTH / 7;
 	NUMBOX numB;
 
-	numB.l = 5-(( P.x - (offset/2))/offset);
-	numB.c = (( P.y - (offset/2))/offset);
+	numB.c = 5-(( P.x - (offset/2))/offset);
+	numB.l = (( P.y - (offset/2))/offset);
 
 	return numB;
 }

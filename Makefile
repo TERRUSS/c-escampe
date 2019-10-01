@@ -2,8 +2,8 @@ CC=gcc
 CFLAGS=-O2 -Wall `sdl-config --cflags` -std=c99
 LIBS=`sdl-config --libs` -lm -lSDL_ttf
 DIR=IN200
-FILES=utils/init.c utils/utils.c movements/movements.c strategy/start.c display/display.c display/draw.c display/jucy.c
-HEADERS=utils/init.h utils/utils.h utils/types.h movements/movements.h strategy/start.h display/display.h display/draw.h display/jucy.h
+FILES=utils/init.c utils/utils.c movements/movements.c strategy/start.c display/display.c display/draw.c display/jucy.c strategy/ia.c
+HEADERS=utils/init.h utils/utils.h utils/types.h movements/movements.h strategy/start.h display/display.h display/draw.h display/jucy.h strategy/ia.h
 
 #Cible generique pour Linux
 %: graphics.o %.c

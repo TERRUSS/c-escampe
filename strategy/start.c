@@ -8,8 +8,6 @@ int get_winner(int player){
 
 	int i, j;
 
-	printf("player %d\n", player);
-
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 6; j++) {
 			if (plateau[i][j].typeP == LICORNE) {

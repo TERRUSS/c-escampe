@@ -38,19 +38,27 @@ void update_board(int ig){
 					P = numBox_to_pointBG_ig2(numB);
 				}
 				affiche_paladin(P, plateau[i][j].coulP);
-
 			}
 		}
 	}
 }
 
-void affiche_lisere (POINT bg, int nbLisere){
+
+void affiche_lisere (NUMBOX numB, int nbLisere, int ig){
 
 	int i;
 	int offset = WIDTH / 7;
 
+	POINT P;
+
+	if(ig == 1) {
+		P = numBox_to_pointBG_ig1(numB);
+	} else {
+		P = numBox_to_pointBG_ig2(numB);
+	}
+
 	for(i = 0; i < nbLisere; i++) {
-		draw_circle(bg, offset/2 - i*5, deeppink);
+		draw_circle(P, offset/2 - i*5, deeppink);
 	}
 
 }
@@ -73,6 +81,7 @@ void affiche_paladin (POINT bg, COUL coulP){
 	draw_fill_circle(bg, 15, deeppink);
 }
 
+
 void affiche_vide (){
 	int i, j;
 	NUMBOX numB;
@@ -92,8 +101,10 @@ void affiche_vide (){
 	affiche_all();
 }
 
-void calcule_pm(NUMBOX numB){
-	int i, x, y;
+
+
+void calcule_pm(NUMBOX numB, int player){
+	int i, j, x, y;
 	int pm = plateau[numB.c][numB.l].lisere;
 
 		//clean
@@ -103,93 +114,98 @@ void calcule_pm(NUMBOX numB){
 		}
 	}
 
-	printf("--- [%d %d]\n", numB.c, numB.l);
-
-	expand(numB.c, numB.l, 1);
+		//gooo
+	expand(numB.c, numB.l, 1, player);
 
 	for (i = 2; i <= pm; i++){
 
 		for (x = 0; x < 6; x++) {
 			for (y = 0; y < 6; y++) {
 				if (plateau[x][y].tmp_play == i-1 ){
-						expand(x, y, i);
-					printf("CHECKING [%d %d]\n", x, y);
+						expand(x, y, i, player);
 				}
 			}
 		}
+	}
 
+	for (i = 0; i < 6; i++){
+		for (j = 0; j < 6; j++){
+			if (plateau[i][j].tmp_play == pm){
+				numB.c = i;
+				numB.l = j;
+				plateau[numB.c][numB.l].playP = PLAYABLE;
+			}
+		}
 	}
 }
 
-void expand(int x, int y, int i) {
+void expand(int x, int y, int i, int player) {
 	if (x+1 < 6) {
-		if (plateau[x+1][y].typeP == VIDE) {
-			if(plateau[x][y].tmp_play == 2 && plateau[x+1][y].tmp_play == 1){
-				if ( is_surrounded_by_1(x+1, y)){
-					plateau[x+1][y].tmp_play = i;
+		if (plateau[x+1][y].typeP != PALADIN) {
+			if (plateau[x+1][y].typeP == LICORNE){
+				if (plateau[x+1][y].coulP == player) {
+					if(plateau[x+1][y].tmp_play != 2){
+						plateau[x+1][y].tmp_play = i;
+					}
 				}
 			} else {
-				plateau[x+1][y].tmp_play = i;
+				if(plateau[x+1][y].tmp_play != 2){
+					plateau[x+1][y].tmp_play = i;
+				}
 			}
 		}
 	}
 
 	if (x-1 >= 0) {
-		if (plateau[x-1][y].typeP == VIDE) {
-			if(plateau[x][y].tmp_play == 2 && plateau[x-1][y].tmp_play == 1){
-				if ( is_surrounded_by_1(x-1, y)){
-					plateau[x-1][y].tmp_play = i;
+		if (plateau[x-1][y].typeP != PALADIN) {
+			if (plateau[x-1][y].typeP == LICORNE){
+				if (plateau[x-1][y].coulP == player) {
+					if(plateau[x-1][y].tmp_play != 2){
+						plateau[x-1][y].tmp_play = i;
+					}
 				}
 			} else {
-				plateau[x-1][y].tmp_play = i;
+				if(plateau[x-1][y].tmp_play != 2){
+					plateau[x-1][y].tmp_play = i;
+				}
 			}
 		}
 	}
 
 	if (y+1 < 6) {
-		if (plateau[x][y+1].typeP == VIDE) {
-			if(plateau[x][y].tmp_play == 2 && plateau[x][y+1].tmp_play == 1){
-				if ( is_surrounded_by_1(x, y+1)){
+		if (plateau[x][y+1].typeP != PALADIN) {
+			if (plateau[x][y+1].typeP == LICORNE){
+				if (plateau[x][y+1].coulP == player) {
+					if(plateau[x][y+1].tmp_play != 2){
+						plateau[x][y+1].tmp_play = i;
+					}
+				}
+			} else {
+				if(plateau[x][y+1].tmp_play != 2){
 					plateau[x][y+1].tmp_play = i;
 				}
-			} else {
-				plateau[x][y+1].tmp_play = i;
 			}
 		}
 	}
 
-			if (y-1 >= 0) {
-		if (plateau[x][y-1].typeP == VIDE) {
-			if(plateau[x][y].tmp_play == 2 && plateau[x][y-1].tmp_play == 1){
-				if ( is_surrounded_by_1(x, y-1)){
-					plateau[x][y-1].tmp_play = i;
+	if (y-1 >= 0) {
+		if (plateau[x][y-1].typeP != PALADIN) {
+			if (plateau[x][y-1].typeP == LICORNE){
+				if (plateau[x][y-1].coulP == player) {
+					if(plateau[x][y-1].tmp_play != 2){
+						plateau[x][y-1].tmp_play = i;
+					}
 				}
 			} else {
-				plateau[x][y-1].tmp_play = i;
+				if(plateau[x][y-1].tmp_play != 2){
+					plateau[x][y-1].tmp_play = i;
+				}
 			}
 		}
 	}
 
 }
 
-int is_surrounded_by_1(int x, int y) {
-
-	if (plateau[x+1][y+1].tmp_play == 1){
-		return 1;
-	}
-	if (plateau[x+1][y-1].tmp_play == 1){
-		return 1;
-	}
-	if (plateau[x-1][y+1].tmp_play == 1){
-		return 1;
-	}
-	if (plateau[x-1][y-1].tmp_play == 1){
-		return 1;
-	}
-
-printf("surrounding check : [%d %d] is alone", x, y);
-	return 0;
-}
 
 void affiche_pm(int ig){
 	int i, j, pm = 0;

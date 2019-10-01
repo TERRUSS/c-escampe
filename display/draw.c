@@ -4,7 +4,9 @@
 void draw_board_grid(int ig) {
 
 	POINT P;
-	int i=0, j=0, offset;
+	int i=0, j=0;
+
+	NUMBOX numB;
 	//Le y corespond au ligne
 	//Le x corespond au cologne
 
@@ -13,15 +15,11 @@ void draw_board_grid(int ig) {
 	P.y = HEIGHT - 10;
 	aff_pol("SPLASH", 40, P, deeppink);
 
-	offset = WIDTH / 7;
-	for (j = 0; j < 6; j++) {
-		for (i = 0; i < 6; i++) {
-
-				// on affiche la grille
-			P.x = offset * (j+1);
-			P.y = offset * (i+1);
-
-			affiche_lisere(P, plateau[i][j].lisere);
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			numB.c = i;
+			numB.l = j;
+			affiche_lisere(numB, plateau[i][j].lisere, ig);
 		}
 	}
 }
@@ -89,7 +87,7 @@ void draw_fill_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 }
 
 
-void update_player(int player, int ig) {
+void update_player(int player, int ig, int turn_pm) {
 	POINT P, Q;
 	int i, j;
 	char * playerName[2][12] = {
@@ -112,7 +110,7 @@ void update_player(int player, int ig) {
 
 	}
 
-		//highlight player's pawns
+		//highlight player's playable pawns
 	NUMBOX numB;
 
 	P.x = 0; P.y = 0; // On initialise pour éviter les erreures
@@ -128,7 +126,7 @@ void update_player(int player, int ig) {
 			draw_circle(P, 41, cyan);
 
 				//On hilight les pions jouables / Joueur
-			if (plateau[i][j].coulP == player+1) { //ie. coulP != {NONE, PLAYABLE}
+			if (plateau[i][j].coulP == player+1 && plateau[i][j].lisere == turn_pm) { //ie. coulP != {NONE, PLAYABLE}
 				draw_circle_from_numb(numB, 41, yellow, ig);
 			}
 		}

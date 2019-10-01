@@ -8,7 +8,7 @@
 
 void draw_board_grid(int ig);
 
-void update_player(int player, int ig);
+void update_player(int player, int ig, int turn_pm);
 
 void print_ruler();
 
