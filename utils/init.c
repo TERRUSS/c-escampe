@@ -61,10 +61,12 @@ void init_piece2_debug(){
 }
 
 void select_pawn_position(int ig){
-	NUMBOX licorn,paladin;
-	int x;
-	// NUMBOX Paladin;
-	int i;
+	NUMBOX licorn, paladin;
+	int x, i;
+
+	paladin.c = 0; paladin.l = 0; //On évite les warnings
+
+
 	hint_message("Joueur NOIR : Place ta LICORNE");
 	do {
 		licorn = select_cell(ig);

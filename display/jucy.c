@@ -98,6 +98,7 @@ void loading_screen(){
 
 void screen_select_player(int* color){
 	int rand, player = 0;
+	// player = 0;
 
 	affiche_auto_off();
 

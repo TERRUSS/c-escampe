@@ -65,6 +65,7 @@ void hint_message(char * message) {
 void draw_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 
 	POINT P;
+	P.x = 0; P.y = 0; //on evite les warnings
 
 	if (ig == 1) {
 		P = numBox_to_pointBG_ig1(numB);
@@ -77,6 +78,8 @@ void draw_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 void draw_fill_circle_from_numb(NUMBOX numB, int radius, int color, int ig){
 
 	POINT P;
+
+	P.x = 0; P.y = 0; //on evite les warnings
 
 	if (ig == 1) {
 		P = numBox_to_pointBG_ig1(numB);
@@ -99,15 +102,12 @@ void update_player(int player, int ig, int turn_pm) {
 	P.x = WIDTH - 45; P.y = HEIGHT;
 	Q.x = WIDTH; Q.y = 0;
 
-	affiche_auto_off();
-
 	draw_fill_rectangle(P, Q, cyan);
 
 	for (i = 0; i < 12; i++){
 		P.x = WIDTH - 45;
 		P.y = HEIGHT - 120 - i*40;
 		aff_pol(playerName[player][i], 40, P, deeppink);
-
 	}
 
 		//highlight player's playable pawns

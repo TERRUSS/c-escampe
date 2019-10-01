@@ -873,7 +873,8 @@ void writeln() { write_text(NULL); }
 int lire_entier_clavier()
 	{
 	int n;
-	int ret = 0;
+	int ret;
+	ret = 1; //Fix ur shitty lib
 	printf("Donner un entier : ");
 	fflush(stdout);
 	ret = scanf("%d",&n);

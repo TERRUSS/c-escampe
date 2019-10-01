@@ -7,6 +7,7 @@ void affiche_plateau(int ig) { //TODO : variation
 	draw_board_grid(ig);
 	print_ruler();
 
+	affiche_all();
 }
 
 void update_board(int ig){
@@ -41,6 +42,7 @@ void update_board(int ig){
 			}
 		}
 	}
+	affiche_all();
 }
 
 
@@ -230,6 +232,8 @@ void affiche_pm(int ig){
 			}
 		}
 	}
+
+	affiche_all();
 }
 
 
