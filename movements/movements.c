@@ -4,19 +4,22 @@
 int move (int ig, int player, int * turn_pm){
 
  NUMBOX numPawn;
- int replay = false,playablePawns=0,i,j;
+ int replay = false, playablePawns=0,i,j;
 
 		//selction du pion
   for (i = 0; i < 6; i++) {
 		for (j = 0; j < 6; j++) {
-			if (plateau[i][j].lisere == *turn_pm){
+			if (plateau[i][j].lisere == *turn_pm || *turn_pm == -1){
       	if (plateau[i][j].coulP == player+1){
           playablePawns++;
         }
       }
     }
   }
+  printf("ok\n");
+
   if(playablePawns>0){
+
   	numPawn = select_pawn(ig, player, *turn_pm);
 
   	replay = select_deplacement(ig, numPawn, player, turn_pm);
@@ -46,7 +49,7 @@ NUMBOX select_pawn (int ig, int player, int turn_pm){
 
 		if (plateau[numPawn.c][numPawn.l].typeP != VIDE) {
 			if (plateau[numPawn.c][numPawn.l].coulP == couleur){
-				if (plateau[numPawn.c][numPawn.l].lisere == turn_pm){
+				if (plateau[numPawn.c][numPawn.l].lisere == turn_pm || turn_pm == -1){
 					ok = true;
 					break;
 				}

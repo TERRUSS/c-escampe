@@ -9,8 +9,9 @@
 int main() {
 	int ig, currentPlayer = 0, gagnant = false;
 	int replay = false, mode;
-	int next_turn_pm;
+	int next_turn_pm = -1;
 	int color, ia_color;
+
 
 	init_plateau();
 	//init_piece2_debug();

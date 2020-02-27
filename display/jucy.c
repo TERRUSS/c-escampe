@@ -97,7 +97,7 @@ void loading_screen(){
 }
 
 void screen_select_player(int* color){
-	int rand, player = 0;
+	int rand, player;
 	// player = 0;
 
 	affiche_auto_off();
@@ -113,12 +113,12 @@ void screen_select_player(int* color){
 	*color = rand;
 
 	if (rand == 1) {
-		player = 1;
+		// player = 1;
 		aff_pol("Player 1: Player Black", 30, P, deeppink);
 		P.y = 500;
 		aff_pol("player 2: Player White", 30, P, deeppink);
 	}else{
-		player = 0;
+		// player = 0;
 
 		aff_pol("Player 1: Player White", 30, P, deeppink);
 		P.y = 500;
